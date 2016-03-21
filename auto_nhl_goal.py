@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 #test
-
-import time, datetie, os, random
+from datetime import datetime
+import time, os, random
 import RPi.GPIO as GPIO
 import subprocess, ctypes
 
@@ -33,7 +33,7 @@ def fetch_score():
 	score=subprocess.check_output("wget -O- http://canadiens.nhl.com/gamecenter/en -nv | grep -o 'team.>MTL.*tot...' | grep -o 'tot.>.' | grep -o '[0-9]' | head -n 1", shell=True)
 	return score
 
-def score_int(score)
+def score_int(score):
     	try:
 		score=int(score)
     	except:
@@ -41,7 +41,7 @@ def score_int(score)
     	return score
 
 def check_season():
-	now=datetime.now()
+	now = datetime.now()
 	while now.month in (7, 8, 9):
             if now.day < 30 and now.month < 9:
 		time.sleep(8640)
@@ -95,4 +95,4 @@ try:
 except KeyboardInterrupt:					
 	#Restore GPIO to default state
 	GPIO.cleanup()
-	print ("GPIO cleaned")
+	print ("'\nGPIO cleaned! Goodbye!")
