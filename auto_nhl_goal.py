@@ -41,6 +41,7 @@ def check_season():
 	now = datetime.now()
 	while now.month in (7, 8, 9):
             if now.day < 23 and now.month < 9:
+            	print "OFF SEASON!"
 		time.sleep(604800)
 		now = datetime.datetime.now()
 
@@ -49,6 +50,7 @@ def check_if_game():
         url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
         MTL=requests.get(url)
 	while "MTL" not in MTL.text:
+		print "No game today!"
 		time.sleep(43200)
 		now=datetime.now()
         	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
