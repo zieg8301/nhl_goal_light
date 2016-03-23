@@ -17,16 +17,12 @@ GPIO.output(7,True)
 def activate_goal_light():
 	#select random audio clip
 	songrandom=random.randint(1, 3)
-	#Set pin 7 output at high for goal light
+	#Set pin 7 output at high for goal light ON
 	GPIO.output(7,False)
 	#Play sound
-	if (songrandom == 1):
-		os.system("sudo mpg123 ./audio/goal_horn_1.mp3")
-	elif (songrandom == 2):
-		os.system("sudo mpg123 ./audio/goal_horn_2.mp3")
-	elif (songrandom == 3):
-		os.system("sudo mpg123 ./audio/goal_horn_3.mp3")
-	#Set pin 7 output at high for goal light
+	command_play_song="sudo mpg123 ./audio/goal_horn_%s.mp3" % str(songrandom)
+	os.system(command_play_song)
+	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
 def fetch_score(game_id):
