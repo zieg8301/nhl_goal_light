@@ -45,13 +45,13 @@ def check_if_game():
 	now=datetime.now()
         url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
         MTL=requests.get(url)
-	while "MTL" not in MTL.text:
+	while "NYI" not in MTL.text:
 		print "No game today!"
 		time.sleep(43200)
 		now=datetime.now()
         	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
         	MTL=requests.get(url)
-	game_id=MTL.text[MTL.text.find("CANADIENS"):MTL.text.find("id")+14]
+	game_id=MTL.text[MTL.text.find("ISLANDERS"):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
 	return game_id
 	
@@ -66,7 +66,7 @@ print ("When a goal is scored, please press the GOAL button...")
 try:
 	while (1):
 	
-		check_season() #check if in season
+		#check_season() #check if in season
 		game_id=check_if_game() #check if game tonight/need to update with today's date
 		#check the state of the button/site two times per second
 		time.sleep(0.5)
