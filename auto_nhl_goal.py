@@ -4,7 +4,6 @@ from datetime import datetime
 import time, os, random
 import requests
 import RPi.GPIO as GPIO
-#import subprocess, ctypes
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -30,7 +29,7 @@ def fetch_score(game_id):
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
         score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.cout('t1...MTL')
+	score=score.count('t1...MTL')
 	return score
 
 def check_season():
@@ -41,18 +40,19 @@ def check_season():
 		time.sleep(604800)
 		now = datetime.datetime.now()
 
-def check_if_game():
+def check_if_game(team):
 	now=datetime.now()
         url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
         MTL=requests.get(url)
-	while "NYI" not in MTL.text:
+	while team not in MTL.text:
 		print "No game today!"
 		time.sleep(43200)
 		now=datetime.now()
         	url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
         	MTL=requests.get(url)
-	game_id=MTL.text[MTL.text.find("ISLANDERS"):MTL.text.find("id")+14]
+	game_id=MTL.text[MTL.text.find(team):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
+	print "Today's game ID is : {GameId}".format(GameId=game_id)
 	return game_id
 	
 
@@ -62,12 +62,15 @@ def check_if_game():
 old_score=0
 new_score=0
 
+team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
+team=team.upper()
+
 print ("When a goal is scored, please press the GOAL button...")
 try:
 	while (1):
 	
 		#check_season() #check if in season
-		game_id=check_if_game() #check if game tonight/need to update with today's date
+		game_id=check_if_game(team) #check if game tonight/need to update with today's date
 		#check the state of the button/site two times per second
 		time.sleep(0.5)
 		
