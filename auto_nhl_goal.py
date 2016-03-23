@@ -51,7 +51,16 @@ def check_season():
             		time.sleep(900)
             		now = datetime.datetime.now()
 
-
+def check_if_game():
+	if_game=False
+	while(not if_game):
+		MTL=subprocess.check_output("wget -O- http://live.nhle.com/GameData/GCScoreboard/2016-03-22.jsonp -nv | grep -o 'MTL'", shell=True)
+        	if "MTL" in MTL:
+                	if_game=True
+         
+                
+                
+                
 #MAIN
 
 #init        	
@@ -65,7 +74,8 @@ print ("When a goal is scored, please press the GOAL button...")
 try:
 	while (1):
 	
-		check_season()
+		check_season() #check if in season
+		#check_if_game() #check if game tonight/need to update with today's date
 		#check the state of the button/site two times per second
 		time.sleep(0.5)
 		
