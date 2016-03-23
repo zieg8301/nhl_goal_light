@@ -42,13 +42,13 @@ def check_season():
 
 def check_if_game(team):
 	now=datetime.now()
-        url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
+        url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         MTL=requests.get(url)
 	while team not in MTL.text:
 		print "No game today!"
 		time.sleep(43200)
 		now=datetime.now()
-        	url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
+        	url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         	MTL=requests.get(url)
 	game_id=MTL.text[MTL.text.find(team):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
