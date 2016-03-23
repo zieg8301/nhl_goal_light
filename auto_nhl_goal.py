@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-#test
 from datetime import datetime
 import time, os, random
+import requests
 import RPi.GPIO as GPIO
-import subprocess, ctypes
+#import subprocess, ctypes
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -29,16 +29,13 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light
 	GPIO.output(7,True)
 
-def fetch_score():
-	score=subprocess.check_output("wget -O- http://canadiens.nhl.com/gamecenter/en -nv | grep -o 'team.>MTL.*tot...' | grep -o 'tot.>.' | grep -o '[0-9]' | head -n 1", shell=True)
+def fetch_score(game_id):
+	season_id = game_id[:4] + str(int(game_id[:4])+1)
+        url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
+	score=requests.get(url)
+	score=score.text[score.text.find("goalSummary":]
+	score=score.cout('t1...MTL')
 	return score
-
-def score_int(score):
-    	try:
-		score=int(score)
-    	except:
-	    	pass
-    	return score
 
 def check_season():
 	now = datetime.now()
@@ -49,40 +46,36 @@ def check_season():
 
 def check_if_game():
 	now=datetime.now()
-	url="http://live.nhle.com/GameData/GCScoreboard/%s-%s-%s.jsonp" % (now.year,now.month,now.day)
-	if_game=False
-		while(not if_game):
-			MTL=subprocess.check_output("wget -O- http://live.nhle.com/GameData/GCScoreboard/2016-03-22.jsonp -nv | grep -o 'MTL'", shell=True)
-        		if "MTL" in MTL:
-                		if_game=True
-			else:
-				time.sleep(43200)
+        url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+        MTL=requests.get(url)
+	while "MTL" not in MTL.text
+		time.sleep(43200)
+		now=datetime.now()
+        	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+        	MTL=requests.get(url)
+	game_id=MTL.text[MTL.text.find("CANADIENS":MTL.text.find("id")+14]
+	game_id = game_id[game_id.find("id")+4:]
+	return game_id
+	
 
 #MAIN
 
 #init        	
 old_score=0
 new_score=0
-old_score=fetch_score()
-old_score=score_int(old_score)
-
 
 print ("When a goal is scored, please press the GOAL button...")
 try:
 	while (1):
 	
 		check_season() #check if in season
-		#check_if_game() #check if game tonight/need to update with today's date
+		game_id=check_if_game() #check if game tonight/need to update with today's date
 		#check the state of the button/site two times per second
 		time.sleep(0.5)
 		
 		#Check score online and save score
-		new_score=fetch_score()
-		#Convert string to integer
-	    
-		new_score=score_int(new_score)	
-	
-	
+		new_score=fetch_score(game_id)
+			    
 		#If new game, replace old score with 0
 		if old_score > new_score:
 			old_score=0
