@@ -52,10 +52,12 @@ def check_season():
             		now = datetime.datetime.now()
 
 def check_if_game():
+	now=datetime.now()
+	url="http://live.nhle.com/GameData/GCScoreboard/%s-%s-%s.jsonp" % (now.year,now.month,now.day)
 	if_game=False
-	while(not if_game):
-		MTL=subprocess.check_output("wget -O- http://live.nhle.com/GameData/GCScoreboard/2016-03-22.jsonp -nv | grep -o 'MTL'", shell=True)
-        	if "MTL" in MTL:
+		while(not if_game):
+			MTL=subprocess.check_output("wget -O- http://live.nhle.com/GameData/GCScoreboard/2016-03-22.jsonp -nv | grep -o 'MTL'", shell=True)
+        		if "MTL" in MTL:
                 	if_game=True
          
                 
