@@ -53,7 +53,7 @@ def check_if_game():
 		now=datetime.now()
         	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
         	MTL=requests.get(url)
-	game_id=MTL.text[MTL.text.find("CANADIENS":MTL.text.find("id")+14]
+	game_id=MTL.text[MTL.text.find("CANADIENS"):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
 	return game_id
 	
