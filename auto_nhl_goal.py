@@ -29,8 +29,7 @@ def fetch_score(game_id):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
         score=requests.get(url)
-	score=str(score.text[score.text.find("goalSummary"):])
-	print score
+	score=score.text[score.text.find("goalSummary"):]
 	score=score.cout('t1...MTL')
 	return score
 
