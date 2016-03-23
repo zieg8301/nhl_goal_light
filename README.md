@@ -9,8 +9,12 @@ run: $ sudo pip install -r requirements.txt
 
 #Materials
 -Raspberry Pi (using raspberry pi A model, but any model will work. PiZero would be best, but needs GPIO to be installed)
+
 -Red Rotating Beacon Warning Light from ebay
+
 -5V 2 Channel Relay Module from ebay
+
 -Momentary OFF ON Push Round Button
+
 -12V to 5V 1A adapter (used a car usb adapter) 
 
