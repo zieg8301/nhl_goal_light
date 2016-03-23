@@ -20,14 +20,14 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light ON
 	GPIO.output(7,False)
 	#Play sound
-	command_play_song="sudo mpg123 ./audio/goal_horn_%s.mp3" % str(songrandom)
+	command_play_song='sudo mpg123 ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
 	os.system(command_play_song)
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
 def fetch_score(game_id):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
-	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
+	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
         score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
 	score=score.cout('t1...MTL')
@@ -43,13 +43,13 @@ def check_season():
 
 def check_if_game():
 	now=datetime.now()
-        url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+        url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
         MTL=requests.get(url)
 	while "NYI" not in MTL.text:
 		print "No game today!"
 		time.sleep(43200)
 		now=datetime.now()
-        	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+        	url='http://live.nhle.com/GameData/GCScoreboard/{Date}.jsonp'.format(Date=now.strftime("%Y-%m-%d"))
         	MTL=requests.get(url)
 	game_id=MTL.text[MTL.text.find("ISLANDERS"):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
