@@ -43,13 +43,9 @@ def score_int(score):
 def check_season():
 	now = datetime.now()
 	while now.month in (7, 8, 9):
-            if now.day < 30 and now.month < 9:
-		time.sleep(8640)
+            if now.day < 23 and now.month < 9:
+		time.sleep(604800)
 		now = datetime.datetime.now()
-	while now.hour < 11:
-		if now.minute < 30 :
-            		time.sleep(900)
-            		now = datetime.datetime.now()
 
 def check_if_game():
 	now=datetime.now()
@@ -58,11 +54,10 @@ def check_if_game():
 		while(not if_game):
 			MTL=subprocess.check_output("wget -O- http://live.nhle.com/GameData/GCScoreboard/2016-03-22.jsonp -nv | grep -o 'MTL'", shell=True)
         		if "MTL" in MTL:
-                	if_game=True
-         
-                
-                
-                
+                		if_game=True
+			else:
+				time.sleep(43200)
+
 #MAIN
 
 #init        	
