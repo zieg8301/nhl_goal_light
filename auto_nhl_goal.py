@@ -21,11 +21,11 @@ def activate_goal_light():
 	GPIO.output(7,False)
 	#Play sound
 	if (songrandom == 1):
-		os.system("sudo mpg123 ./goal_horn_1.mp3")
+		os.system("sudo mpg123 ./audio/goal_horn_1.mp3")
 	elif (songrandom == 2):
-		os.system("sudo mpg123 ./goal_horn_2.mp3")
+		os.system("sudo mpg123 ./audio/goal_horn_2.mp3")
 	elif (songrandom == 3):
-		os.system("sudo mpg123 ./goal_horn_3.mp3")
+		os.system("sudo mpg123 ./audio/goal_horn_3.mp3")
 	#Set pin 7 output at high for goal light
 	GPIO.output(7,True)
 
