@@ -24,12 +24,12 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
-def fetch_score(game_id):
+def fetch_score(game_id,team_abr):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
         score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.count('t1...MTL')
+	score=score.count('t1...{Team_Abr}').format(Team_Abr=team_abr)
 	return score
 
 def check_season():
@@ -41,6 +41,8 @@ def check_season():
 		now = datetime.datetime.now()
 
 def check_if_game(team):
+	team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
+	team=team.upper()
 	now=datetime.now()
         url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         MTL=requests.get(url)
@@ -50,11 +52,15 @@ def check_if_game(team):
 		now=datetime.now()
         	url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         	MTL=requests.get(url)
-	game_id=MTL.text[MTL.text.find(team):MTL.text.find("id")+14]
-	game_id = game_id[game_id.find("id")+4:]
-	print "Today's game ID is : {GameId}".format(GameId=game_id)
-	return game_id
-	
+	game_id=MTL.text[MTL.text.find(team)-27:MTL.text.find("}")]
+	team_abr = game_id[game_id.find("ta")+5:game_id.find("ta")+8]
+	if 'FINAL' in game_id:
+		game_id =  ""
+	else
+		game_id = game_id[game_id.find("id")+4:game_id.find("id")+14]
+		print "Today's game ID is : {GameId}".format(GameId=game_id)
+		
+	return (game_id,team_abr)
 
 #MAIN
 
@@ -62,20 +68,17 @@ def check_if_game(team):
 old_score=0
 new_score=0
 
-team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
-team=team.upper()
-
 print ("When a goal is scored, please press the GOAL button...")
 try:
 	while (1):
 	
 		#check_season() #check if in season
-		game_id=check_if_game(team) #check if game tonight/need to update with today's date
+		(game_id,team_abr)=check_if_game() #check if game tonight/need to update with today's date
 		#check the state of the button/site two times per second
 		time.sleep(0.5)
 		
 		#Check score online and save score
-		new_score=fetch_score(game_id)
+		new_score=fetch_score(game_id,team_abr)
 			    
 		#If new game, replace old score with 0
 		if old_score > new_score:
