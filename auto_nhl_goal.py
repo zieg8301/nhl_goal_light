@@ -28,9 +28,8 @@ def fetch_score(game_id,team_abr):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
         score=requests.get(url)
-	print (game_id,team_abr)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.count(('t1...{Team_Abr}').format(Team_Abr=team_abr))
+	score=score.count('t1":"{team_abr}'.format(team_abr=team_abr))
 	return score
 
 def check_season():
@@ -42,8 +41,6 @@ def check_season():
 		now = datetime.datetime.now()
 
 def check_if_game(team):
-	#team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
-	#team=team.upper()
 	now=datetime.now()
         url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         MTL=requests.get(url)
@@ -60,7 +57,6 @@ def check_if_game(team):
 	else:
 		game_id = game_id[game_id.find("id")+4:game_id.find("id")+14]
 		#print "Today's game ID is : {GameId}".format(GameId=game_id)
-		
 	return (game_id,team_abr)
 
 #MAIN
@@ -74,12 +70,12 @@ try:
 	team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
         team=team.upper()
 	while (1):
-	
-		#check_season() #check if in season
-		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
-		#check the state of the button/site two times per second
 		
-		while "" not in game_id:
+		
+		check_season() #check if in season
+		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
+			
+		while game_id != "":
 			time.sleep(0.5)
 		
 			#Check score online and save score
@@ -94,7 +90,8 @@ try:
 				#save new score
 				old_score=new_score
 				activate_goal_light()
-	
+				print "GOAL!"
+			
 			#If the button is pressed
 			if(GPIO.input(15)==0):
 				#save new score
