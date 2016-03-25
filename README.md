@@ -1,5 +1,5 @@
 # nhl_goal_light
-Nhl goal light python for raspberry pi GPIO. Works with any team, just input team name whitout city when prompted.<br />
+Nhl goal light python for raspberry pi GPIO. Works with any team, just enter team name (without city) when prompted.<br />
 Before using this file, make sur you have:
 
 python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
