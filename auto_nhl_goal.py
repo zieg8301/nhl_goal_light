@@ -76,7 +76,7 @@ try:
 		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 			
 		while game_id != "":
-			time.sleep(0.5)
+			time.sleep(2)
 		
 			#Check score online and save score
 			new_score=fetch_score(game_id,team_abr)
