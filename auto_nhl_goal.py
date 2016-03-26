@@ -94,14 +94,14 @@ try:
 			if new_score > old_score:
 				#save new score
 				old_score=new_score
-				#activate_goal_light()
+				activate_goal_light()
 				print "GOAL!"
 			
 			#If the button is pressed
 			if(GPIO.input(15)==0):
 				#save new score
 				old_score=new_score
-				#activate_goal_light()
+				activate_goal_light()
 			
 			(game_id,team_abr)=check_if_game(team)
 			
