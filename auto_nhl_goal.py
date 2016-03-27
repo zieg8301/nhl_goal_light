@@ -28,7 +28,10 @@ def activate_goal_light():
 def fetch_score(game_id,team_abr):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
-        score=requests.get(url)
+        try:
+		score=requests.get(url)
+	except:
+		pass
 	score=score.text[score.text.find("goalSummary"):]
 	score=score.count('t1":"{team_abr}'.format(team_abr=team_abr))
 	print score
@@ -68,6 +71,7 @@ def check_if_game(team):
 #init        	
 old_score=0
 new_score=0
+count=0
 
 print ("When a goal is scored, please press the GOAL button...")
 try:
@@ -81,7 +85,7 @@ try:
 		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 			
 		while game_id != "":
-#			time.sleep(2)
+			time.sleep(1)
 		
 			#Check score online and save score
 			new_score=fetch_score(game_id,team_abr)
@@ -102,7 +106,8 @@ try:
 				#save new score
 				old_score=new_score
 				activate_goal_light()
-			
+			count += 1
+			print count
 			(game_id,team_abr)=check_if_game(team)
 			
 except KeyboardInterrupt:					
