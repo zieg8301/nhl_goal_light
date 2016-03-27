@@ -4,7 +4,6 @@ from datetime import datetime
 import time, os, random
 import requests
 import RPi.GPIO as GPIO
-#from IPython import embed
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -28,10 +27,7 @@ def activate_goal_light():
 def fetch_score(game_id,team_abr):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
-        try:
-		score=requests.get(url)
-	except:
-		pass
+        score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
 	score=score.count('t1":"{team_abr}'.format(team_abr=team_abr))
 	print score
@@ -46,7 +42,6 @@ def check_season():
 		now = datetime.datetime.now()
 
 def check_if_game(team):
-	#embed()
 	now=datetime.now()
         url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         MTL=requests.get(url)
@@ -56,14 +51,14 @@ def check_if_game(team):
 		now=datetime.now()
         	url='http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp'.format(now)
         	MTL=requests.get(url)
-	game_id=MTL.text[MTL.text.find(team)-27:MTL.text.find(team)+200]
+	game_id=MTL.text[MTL.text.find(team)-27:]
 	team_abr = game_id[game_id.find("ta")+5:game_id.find("ta")+8]
-	if 'final' in game_id:
-		game_id =  ""
+	#if 'FINAL' in game_id:
+		#	game_id =  ""
 		print "Game Over!"
-	else:
-		game_id = game_id[game_id.find("id")+4:game_id.find("id")+14]
-		print "Today's game ID is : {GameId}".format(GameId=game_id)
+	#else:
+	game_id = game_id[game_id.find("id")+4:game_id.find("id")+14]
+	print "Today's game ID is : {GameId}".format(GameId=game_id)
 	return (game_id,team_abr)
 
 #MAIN
@@ -71,15 +66,12 @@ def check_if_game(team):
 #init        	
 old_score=0
 new_score=0
-count=0
 
 print ("When a goal is scored, please press the GOAL button...")
 try:
-	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
-        if team is "":
-		team="CANADIENS"
-	team=team.upper()
-	
+	#team=raw_input("Enter team you want to setup goal light for (Ex: CANADIENS) \n")
+        #team=team.upper()
+	team="CANADIENS"
 	while (1):
 		
 		
@@ -87,7 +79,7 @@ try:
 		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 			
 		while game_id != "":
-			time.sleep(1)
+			#time.sleep(2)
 		
 			#Check score online and save score
 			new_score=fetch_score(game_id,team_abr)
@@ -100,16 +92,15 @@ try:
 			if new_score > old_score:
 				#save new score
 				old_score=new_score
-				activate_goal_light()
+				#activate_goal_light()
 				print "GOAL!"
 			
 			#If the button is pressed
 			if(GPIO.input(15)==0):
 				#save new score
 				old_score=new_score
-				activate_goal_light()
-			count += 1
-			print count
+				#activate_goal_light()
+			
 			(game_id,team_abr)=check_if_game(team)
 			
 except KeyboardInterrupt:					
