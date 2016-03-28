@@ -117,8 +117,8 @@ try:
 			(game_id,team_abr)=check_if_game(team)
 			
 except KeyboardInterrupt:					
-	requests_cache.clear()
-	print "\nCache cleane!"
+	#requests_cache.clear()
+	#print "\nCache cleaned!"
 	#Restore GPIO to default state
 	GPIO.cleanup()
 	print "GPIO cleaned! Goodbye!"
