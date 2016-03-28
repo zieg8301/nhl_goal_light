@@ -6,6 +6,7 @@
 #nose-cov
 #beautifulsoup4
 requests
+requests-cache
 dev
 RPI.GPIO
 #
