@@ -3,6 +3,7 @@
 from datetime import datetime
 import time, os, random
 import requests
+import requests_cache
 import RPi.GPIO as GPIO
 #from IPython import embed
 
@@ -13,6 +14,9 @@ GPIO.setwarnings(False)
 GPIO.setup(15, GPIO.IN)
 GPIO.setup(7,GPIO.OUT)
 GPIO.output(7,True)
+
+requests_cache.install_cache()
+requests_cache.clear()
 
 def activate_goal_light():
 	#select random audio clip
@@ -28,10 +32,10 @@ def activate_goal_light():
 def fetch_score(game_id,team_abr):
 	season_id = game_id[:4] + str(int(game_id[:4])+1)
 	url='http://live.nhle.com/GameData/{Season}/{GameId}/gc/gcbx.jsonp'.format(Season=season_id,GameId=game_id)
-        try:
-		score=requests.get(url)
-	except:
-		pass
+#        try:
+	score=requests.get(url)
+#	except:
+#		pass
 	score=score.text[score.text.find("goalSummary"):]
 	score=score.count('t1":"{team_abr}'.format(team_abr=team_abr))
 	print score
@@ -87,7 +91,7 @@ try:
 		(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 			
 		while game_id != "":
-			time.sleep(1)
+#			time.sleep(1)
 		
 			#Check score online and save score
 			new_score=fetch_score(game_id,team_abr)
@@ -113,6 +117,9 @@ try:
 			(game_id,team_abr)=check_if_game(team)
 			
 except KeyboardInterrupt:					
+	requests_cache.clear()
+	print "\nCache cleane!"
 	#Restore GPIO to default state
 	GPIO.cleanup()
-	print ("'\nGPIO cleaned! Goodbye!")
+	print "GPIO cleaned! Goodbye!"
+	
