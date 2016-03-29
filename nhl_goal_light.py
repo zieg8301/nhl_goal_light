@@ -73,12 +73,12 @@ try:
 	#team=team.upper()
 	
 	while (1):
-		
-		
 		season=check_season() #check if in season
 		#(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 		gameday=check_if_game()	
-				
+			
+		print gameday
+		
 		if season:
 			if gameday:
 				#Check score online and save score
