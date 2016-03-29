@@ -29,7 +29,7 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
-def fetch_score(game_id,team_abr):
+def fetch_score():
 	now=datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
 	score=requests.get(url)
@@ -75,8 +75,6 @@ try:
 		season=check_season() #check if in season
 		#(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
 		gameday=check_if_game()	
-			
-		print gameday
 		
 		if season:
 			if gameday:
