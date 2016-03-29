@@ -50,10 +50,10 @@ def check_if_game():
 	now=datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
         gameday_url=requests.get(url)
+        print gameday_url.text
 	if "gamePK" in gameday_url.text:
 		return True
 	else:
-		print "No game today!"
 		return False
 
 #MAIN
