@@ -33,7 +33,7 @@ def fetch_score():
 	now=datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
 	score=requests.get(url)
-	score=score.text[score.text.find("id\" : 8")-37:score.text.find("id\" : 8")-33]
+	score=score.text[score.text.find("id\" : 8")-37:score.text.find("id\" : 8")-36]
 	#score=int(score)
 	print score
 	return score
