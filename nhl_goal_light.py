@@ -33,9 +33,11 @@ def fetch_score():
 	now=datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
 	score=requests.get(url)
-	score=score.text[score.text.find("id\" : 8")-22:score.text.find("id\" : 8")-21]
-	score=int(score)
-	print score
+	score1=score.text[score.text.find("id\" : 8")-22:score.text.find("id\" : 8")-21]
+	score12=score.text[score.text.find("id\" : 8")-30:score.text.find("id\" : 8")-20]
+	print score1
+	#score=int(score)
+	print score2
 	return score
 
 def check_season():
