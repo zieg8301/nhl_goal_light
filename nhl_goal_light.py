@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from datetime import datetime
-from datetime import timedelta
+#from datetime import datetime
+from datetime import date
 import time, os, random
 import requests
 #import requests_cache
@@ -31,7 +31,7 @@ def activate_goal_light():
 	GPIO.output(7,True)
 
 def fetch_score():
-	now=datetime.now()
+	now=date.today()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : 8")-37:score.text.find("id\" : 8")-36]
@@ -40,7 +40,7 @@ def fetch_score():
 	return score
 
 def check_season():
-	now = datetime.now()
+	now = date.today()
 	if now.month in (7, 8, 9):
             	return False
 	else:
@@ -48,7 +48,7 @@ def check_season():
 
 def check_if_game():
 	#embed()
-	now=datetime.now()
+	now=date.today()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
         gameday_url=requests.get(url)
 	if "gamePk" in gameday_url.text:
@@ -100,7 +100,7 @@ try:
 					activate_goal_light()
 			else:
 				print "No Game Today!"
-				now=now=datetime.now()
+				now=date.today()
 				time_to_sleep=timedelta(days=1)
 				print time_to_sleep.total_seconds()
 				#time.sleep(time_to_sleep)
