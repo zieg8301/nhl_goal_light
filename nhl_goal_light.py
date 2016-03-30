@@ -101,7 +101,8 @@ try:
 			else:
 				print "No Game Today!"
 				now=date.today()
-				time_to_sleep=now+timedelta(days=1)
+				delta=timedelta(days=1)
+				time_to_sleep=now+delta.total_seconds()
 				print time_to_sleep
 				#time.sleep(time_to_sleep)
 		else:
