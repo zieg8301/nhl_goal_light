@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#from datetime import datetime
+from datetime import timedelta
 from datetime import date
 import time, os, random
 import requests
@@ -101,7 +101,7 @@ try:
 			else:
 				print "No Game Today!"
 				now=date.today()
-				time_to_sleep=timedelta(days=1)
+				time_to_sleep=now+timedelta(days=1)
 				print time_to_sleep.total_seconds()
 				#time.sleep(time_to_sleep)
 		else:
