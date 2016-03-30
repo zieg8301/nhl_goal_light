@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from datetime import datetime
+from datetime import timedelta
 import time, os, random
 import requests
 import requests_cache
@@ -100,12 +101,12 @@ try:
 			else:
 				print "No Game Today!"
 				now=now=datetime.now()
-				time_to_sleep=(datetime.timedelta(days=1)-now).total_seconds()
+				time_to_sleep=(timedelta(days=1)-now).total_seconds()
 				#time.sleep(time_to_sleep)
 		else:
 			print "OFF SEASON!"
 			now=now=datetime.now()
-			time_to_sleep=(datetime.timedelta(month=1)-now).total_seconds()
+			time_to_sleep=(timedelta(weeks=3)-now).total_seconds()
 			#time.sleep(time_to_sleep)
 						
 except KeyboardInterrupt:					
