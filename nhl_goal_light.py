@@ -3,7 +3,7 @@
 from datetime import datetime
 import time, os, random
 import requests
-import requests_cache
+#import requests_cache
 import RPi.GPIO as GPIO
 #from IPython import embed
 
@@ -15,8 +15,8 @@ GPIO.setup(15, GPIO.IN)
 GPIO.setup(7,GPIO.OUT)
 GPIO.output(7,True)
 
-requests_cache.install_cache()
-requests_cache.clear()
+#requests_cache.install_cache()
+#requests_cache.clear()
 
 def activate_goal_light():
 	#select random audio clip
@@ -89,14 +89,14 @@ try:
 				if new_score > old_score:
 					#save new score
 					old_score=new_score
-					#activate_goal_light()
+					activate_goal_light()
 					print "GOAL!"
 			
 				#If the button is pressed
 				if(GPIO.input(15)==0):
 					#save new score
 					old_score=new_score
-					#activate_goal_light()
+					activate_goal_light()
 			else:
 				print "No Game Today!"
 				now=now=datetime.now()
