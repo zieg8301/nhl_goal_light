@@ -101,8 +101,8 @@ try:
 			else:
 				print "No Game Today!"
 				now=now=datetime.now()
-				time_to_sleep=timedelta.total_seconds(days=1)
-				print time_to_sleep
+				time_to_sleep=timedelta(days=1)
+				print time_to_sleep.total_seconds()
 				#time.sleep(time_to_sleep)
 		else:
 			print "OFF SEASON!"
