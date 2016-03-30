@@ -102,7 +102,7 @@ try:
 				print "No Game Today!"
 				now=date.today()
 				time_to_sleep=now+timedelta(days=1)
-				print time_to_sleep.total_seconds()
+				print time_to_sleep
 				#time.sleep(time_to_sleep)
 		else:
 			print "OFF SEASON!"
