@@ -55,6 +55,19 @@ def check_if_game():
 		return True
 	else:
 		return False
+def sleep(sleep_period):
+	now=datetime.now()
+   	if "day" in sleep_period:
+     		delta=timedelta(days=1)
+	elif "season" in sleep_period:
+		if now.month is 8:
+			delta=timedelta(days=31)
+		else:
+			delta=timedelta(days=30)
+    	next_day=datetime.today()+delta
+    	next_day=next_day.replace(hour=0,minute=0)
+    	sleep=next_day-now
+    	time.sleep(sleep)
 
 #MAIN
 
@@ -100,19 +113,10 @@ try:
 					activate_goal_light()
 			else:
 				print "No Game Today!"
-				now=datetime.now()
-				delta=timedelta(days=1)
-				time_to_sleep=now+delta.total_seconds()
-				print time_to_sleep
-				#time.sleep(time_to_sleep)
+				sleep("day")
 		else:
 			print "OFF SEASON!"
-			now=datetime.now()
-			delta=timedelta(weeks=3)
-			time_to_sleep=now+delta.total_seconds()
-			print time_to_sleep
-			#time.sleep(time_to_sleep)
-			######Replace month with 10 and sleep till then!
+			sleep("season")
 						
 except KeyboardInterrupt:					
 	#requests_cache.clear()
