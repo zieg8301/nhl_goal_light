@@ -2,10 +2,10 @@
 Nhl goal light python for raspberry pi GPIO. Works with any team, just enter team name (without city) when prompted.<br />
 Before using this file, make sur you have:
 
-python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
+python-pip, python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
 
-run: $ sudo apt-get install python-dev python-rpi.gpio mpg123<br />
-or run: $ sudo apt-get install mpg123
+run: $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip<br />
+or run: $ sudo apt-get install mpg123 python-pip
         $ sudo pip install -r requirements.txt
 
 #Materials<br />
