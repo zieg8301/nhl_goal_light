@@ -22,11 +22,13 @@ GPIO.output(7,True)
 def get_team()
 	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
         if team is "":
-		team="CANADIENS"
-	team=team.upper()
-	url='http://statsapi.web.nhl.com/api/v1/teams?'
+		team="Canadiens"
+	team=team.title()
+	url='http://statsapi.web.nhl.com/api/v1/teams'
 	team_list=requests.get(url)
-	
+	team_list=team_list.text[team_list.text.find(team)-20:team_list.text.find(team)]
+	teamID=team_list.text[team_list.text.find("id")+6:team_list.text.find("id")+8]
+	print teamID
 	return teamID
 
 def activate_goal_light():
@@ -90,7 +92,7 @@ season=False
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-	#teamID=get_team()
+	teamID=get_team()
 	teamID='8'
 	while (1):
 		season=check_season() #check if in season
