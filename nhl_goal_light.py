@@ -49,7 +49,7 @@ def fetch_score(teamID):
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
 	score=int(score)
-	print score now
+	print (score,now)
 	return score
 
 def check_season():
