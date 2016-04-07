@@ -19,6 +19,16 @@ GPIO.output(7,True)
 #requests_cache.install_cache()
 #requests_cache.clear()
 
+def get_team()
+	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
+        if team is "":
+		team="CANADIENS"
+	team=team.upper()
+	url='http://statsapi.web.nhl.com/api/v1/teams?'
+	team_list=requests.get(url)
+	
+	return teamID
+
 def activate_goal_light():
 	#select random audio clip
 	songrandom=random.randint(1, 3)
@@ -30,9 +40,9 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
-def fetch_score():
+def fetch_score(teamID):
 	now=datetime.now()
-        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
+        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : 8")-37:score.text.find("id\" : 8")-36]
 	score=int(score)
@@ -46,10 +56,10 @@ def check_season():
 	else:
 		return True
 
-def check_if_game():
+def check_if_game(teamID):
 	#embed()
 	now=datetime.now()
-        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId=8&date={:%Y-%m-%d}'.format(now)
+        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
         gameday_url=requests.get(url)
 	if "gamePk" in gameday_url.text:
 		return True
@@ -80,20 +90,17 @@ season=False
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-	#team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
-        #if team is "":
-	#	team="CANADIENS"
-	#team=team.upper()
-	
+	#teamID=get_team()
+	teamID='8'
 	while (1):
 		season=check_season() #check if in season
 		#(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
-		gameday=check_if_game()	
+		gameday=check_if_game(teamID)	
 		
 		if season:
 			if gameday:
 				#Check score online and save score
-				new_score=fetch_score()
+				new_score=fetch_score(teamID)
 			    
 				#If new game, replace old score with 0
 				if old_score > new_score:
