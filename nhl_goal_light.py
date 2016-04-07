@@ -48,6 +48,7 @@ def fetch_score(teamID):
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
+	print score
 	score=int(score)
 	print score
 	return score
