@@ -79,6 +79,7 @@ def sleep(sleep_period):
     	next_day=datetime.today()+delta
     	next_day=next_day.replace(hour=0,minute=0)
     	sleep=next_day-now
+    	sleep=sleep.total_seconds()
     	time.sleep(sleep)
 
 #MAIN
