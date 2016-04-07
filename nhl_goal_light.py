@@ -95,7 +95,6 @@ season=False
 print ("When a goal is scored, press the GOAL button...")
 try:
 	teamID=get_team()
-	teamID='8'
 	while (1):
 		season=check_season() #check if in season
 		#(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
