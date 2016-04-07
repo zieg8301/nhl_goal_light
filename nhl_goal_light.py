@@ -19,7 +19,7 @@ GPIO.output(7,True)
 #requests_cache.install_cache()
 #requests_cache.clear()
 
-def get_team()
+def get_team():
 	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
         if team is "":
 		team="Canadiens"
