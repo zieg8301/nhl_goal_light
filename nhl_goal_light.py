@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-from datetime import timedelta
-from datetime import datetime
+import datetime
 import time, os, random
 import requests
 #import requests_cache
@@ -44,7 +43,7 @@ def activate_goal_light():
 	GPIO.output(7,True)
 
 def fetch_score(teamID):
-	now=datetime.now()
+	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
@@ -53,7 +52,7 @@ def fetch_score(teamID):
 	return score
 
 def check_season():
-	now = datetime.now()
+	now = datetime.datetime.now()
 	if now.month in (7, 8, 9):
             	return False
 	else:
@@ -61,7 +60,7 @@ def check_season():
 
 def check_if_game(teamID):
 	#embed()
-	now=datetime.now()
+	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
         gameday_url=requests.get(url)
 	if "gamePk" in gameday_url.text:
@@ -69,15 +68,15 @@ def check_if_game(teamID):
 	else:
 		return False
 def sleep(sleep_period):
-	now=datetime.now()
+	now=datetime.datetime.now()
    	if "day" in sleep_period:
-     		delta=timedelta(days=1)
+     		delta=datetime.timedelta(days=1)
 	elif "season" in sleep_period:
 		if now.month is 8:
-			delta=timedelta(days=31)
+			delta=datetime.timedelta(days=31)
 		else:
 			delta=timedelta(days=30)
-    	next_day=datetime.today()+delta
+    	next_day=datetime.datetime.today()+delta
     	next_day=next_day.replace(hour=0,minute=0)
     	sleep=next_day-now
     	sleep=sleep.total_seconds()
@@ -94,11 +93,10 @@ season=False
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-	teamID=get_team()
+	teamID=get_team() #choose and return teamID to setup code
 	while (1):
 		season=check_season() #check if in season
-		#(game_id,team_abr)=check_if_game(team) #check if game tonight/need to update with today's date
-		gameday=check_if_game(teamID)	
+		gameday=check_if_game(teamID) #check if game	
 		
 		if season:
 			if gameday:
