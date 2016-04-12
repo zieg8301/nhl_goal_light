@@ -7,7 +7,7 @@ python-pip, python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp
 run: 
         $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip
 or run: 
-        $ sudo apt-get install mpg123 python-pip
+        $ sudo apt-get install mpg123 python-pip <br/>
         $ sudo pip install -r requirements.txt
 <br/>
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.<br/>
