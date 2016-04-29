@@ -26,9 +26,7 @@ def get_team():
 	url='http://statsapi.web.nhl.com/api/v1/teams'
 	team_list=requests.get(url)
 	team_list=team_list.text[team_list.text.find(team)-50:team_list.text.find(team)]
-	print team_list
 	teamID=team_list[team_list.find("id")+6:team_list.find("id")+8]
-	print teamID
 	return teamID
 
 def activate_goal_light():
