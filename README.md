@@ -34,3 +34,8 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 
 ###Audio
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
+
+### TODO
+-Test response time after a goal is scored
+
+-create test folder and test files to allow testing with just a raspberry pi
