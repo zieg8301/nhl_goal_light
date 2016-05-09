@@ -37,5 +37,3 @@ If you wish to change the audio clips to sounds with your teams goal horn and mu
 
 ### TODO
 -Test response time after a goal is scored
-
--create test folder and test files to allow testing with just a raspberry pi
