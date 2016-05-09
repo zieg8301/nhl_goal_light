@@ -20,7 +20,7 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 
 ###Materials
 
--Raspberry Pi (using raspberry pi A model, but any model will work. PiZero would be best, but needs GPIO to be installed)
+-Raspberry Pi (currently using raspberry pi A model, but any model will work)
 
 -Red Rotating Beacon Warning Light from ebay
 
