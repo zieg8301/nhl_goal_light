@@ -31,8 +31,8 @@ def fetch_score1(teamID):
 
 def fetch_score2(team):
 	########################source 2###################
-	now=datetime.now()
-     	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+	now=datetime.datetime.now()
+     	url="http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(now)
      	MTL=requests.get(url)
 	game_id=MTL.text[MTL.text.find(team):]
 	game_id=game_id[MTL.text.find(team):MTL.text.find("id")+14]
