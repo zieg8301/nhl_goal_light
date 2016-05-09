@@ -17,9 +17,10 @@ def get_team():
 	team_list=requests.get(url)
 	team_list=team_list.text[team_list.text.find(team)-50:team_list.text.find(team)]
 	teamID=team_list[team_list.find("id")+6:team_list.find("id")+8]
-	return teamID
+	return (teamID,team)
 
-def fetch_score(teamID):
+def fetch_score1(teamID):
+	########################source 1###################
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
 	score=requests.get(url)
@@ -27,6 +28,24 @@ def fetch_score(teamID):
 	score=int(score)
 	print (score,now.hour, now.minute, now.second)
 	return score
+
+def fetch_score2(team):
+	########################source 2###################
+	now=datetime.now()
+     	url="http://live.nhle.com/GameData/GCScoreboard/%s.jsonp" % (now.strftime("%Y-%m-%d"))
+     	MTL=requests.get(url)
+	game_id=MTL.text[MTL.text.find(team):]
+	game_id=game_id[MTL.text.find(team):MTL.text.find("id")+14]
+	game_id = game_id[game_id.find("id")+4:]
+
+	season_id = game_id[:4] + str(int(game_id[:4])+1)
+     	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
+	score=requests.get(url)
+	score=score.text[score.text.find("goalSummary"):]
+	score=score.cout('t1...STL')
+	print (score,now.hour, now.minute, now.second)
+
+	return score	
 
 def check_season():
 	now = datetime.datetime.now()
@@ -62,15 +81,18 @@ def sleep(sleep_period):
 #MAIN
 
 #init        	
-old_score=0
-new_score=0
+old_score1=0
+new_score1=0
+
+old_score2=0
+new_score2=0
 
 gameday=False
 season=False
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-	teamID=get_team() #choose and return teamID to setup code
+	teamID, team=get_team() #choose and return teamID to setup code
 	while (1):
 		season=check_season() #check if in season
 		gameday=check_if_game(teamID) #check if game	
@@ -78,24 +100,27 @@ try:
 		if season:
 			if gameday:
 				#Check score online and save score
-				new_score=fetch_score(teamID)
-			    
-				#If new game, replace old score with 0
-				if old_score > new_score:
-					old_score=0
-			
+				new_score1=fetch_score1(teamID)
+				new_score2=fetch_score2(team)			    	
+
 				#If score change...
-				if new_score > old_score:
+				if new_score1 > old_score1:
 					#save new score
-					old_score=new_score
-					print ("GOAL! Time : ",now.hour, now.minute, now.second)
+					old_score1=new_score1
+					print ("GOAL source 1! Time : ",now.hour, now.minute, now.second)
+
+				elif new_score2 > old_score2:
+					#save new score
+					old_score2=new_score2
+					print ("GOAL source 2! Time : ",now.hour, now.minute, now.second)
+
 			
 			else:
 				print "No Game Today!"
-				sleep("day")
+				#sleep("day")
 		else:
 			print "OFF SEASON!"
-			sleep("season")
+			#sleep("season")
 						
 except KeyboardInterrupt:					
 	#requests_cache.clear()
