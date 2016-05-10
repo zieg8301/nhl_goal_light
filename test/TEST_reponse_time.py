@@ -42,7 +42,7 @@ def fetch_score2(team):
      	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
 	score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.cout('t1...PIT')
+	score=score.count('t1...PIT')
 	print (score,now.hour, now.minute, now.second)
 
 	return score	
