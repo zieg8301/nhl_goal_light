@@ -38,11 +38,11 @@ def fetch_score2(team):
 	game_id=game_id[MTL.text.find(team):MTL.text.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
 
-	season_id = game_id[:4] + str(int(game_id[:4])+1)
+	season_id = '20152016'
      	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
 	score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.cout('t1...STL')
+	score=score.cout('t1...PIT')
 	print (score,now.hour, now.minute, now.second)
 
 	return score	
