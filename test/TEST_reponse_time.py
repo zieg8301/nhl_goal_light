@@ -26,7 +26,7 @@ def fetch_score1(teamID):
 	score=requests.get(url)
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
 	score=int(score)
-	print (score,now.hour, now.minute, now.second)
+	print ("source 1", score,now.hour, now.minute, now.second)
 	return score
 
 def fetch_score2(team):
@@ -43,7 +43,7 @@ def fetch_score2(team):
 	score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
 	score=score.count('t1...PIT')
-	print (score,now.hour, now.minute, now.second)
+	print ("source 2", score,now.hour, now.minute, now.second)
 
 	return score	
 
