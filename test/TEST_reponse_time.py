@@ -31,18 +31,20 @@ def fetch_score1(teamID):
 
 def fetch_score2(team):
 	########################source 2###################
+	team=team.upper()
 	now=datetime.datetime.now()
-     	url="http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(now)
-     	MTL=requests.get(url)
+     	url="http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp".format(now)
+	MTL=requests.get(url)
 	game_id=MTL.text[MTL.text.find(team):]
-	game_id=game_id[MTL.text.find(team):MTL.text.find("id")+14]
+	game_id=game_id[game_id.find(team):game_id.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
-
-	season_id = '20152016'
-     	url="http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (season_id,game_id)
+	
+	season_id = "20152016"
+     	url="http://live.nhle.com/GameData/{}/{}/gc/gcbx.jsonp".format(season_id,game_id)
 	score=requests.get(url)
 	score=score.text[score.text.find("goalSummary"):]
-	score=score.count('t1...PIT')
+	check='t1":"PIT'
+	score=score.count(check)
 	print ("source 2", score,now.hour, now.minute, now.second)
 
 	return score	
@@ -96,6 +98,7 @@ try:
 	while (1):
 		season=check_season() #check if in season
 		gameday=check_if_game(teamID) #check if game	
+		now=datetime.datetime.now()
 		
 		if season:
 			if gameday:
