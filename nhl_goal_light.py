@@ -43,7 +43,10 @@ def activate_goal_light():
 def fetch_score(teamID):
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
-	score=requests.get(url)
+	try:
+		score=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
 	score=int(score)
 	print (score,now.hour, now.minute, now.second)
@@ -60,7 +63,11 @@ def check_if_game(teamID):
 	#embed()
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
-        gameday_url=requests.get(url)
+        try:
+		gameday_url=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
+
 	if "gamePk" in gameday_url.text:
 		return True
 	else:

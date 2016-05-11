@@ -39,6 +39,7 @@ def fetch_score1(teamID):
 def fetch_score2(team):
 	########################source 2###################
 	team=team.upper()
+	score=""
 	now=datetime.datetime.now()
      	url="http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp".format(now)
 	try:
