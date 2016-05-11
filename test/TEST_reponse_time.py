@@ -99,7 +99,8 @@ try:
 		season=check_season() #check if in season
 		gameday=check_if_game(teamID) #check if game	
 		now=datetime.datetime.now()
-		
+		time.sleep(1)
+	
 		if season:
 			if gameday:
 				#Check score online and save score
