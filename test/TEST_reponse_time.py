@@ -14,7 +14,11 @@ def get_team():
 		team="Canadiens"
 	team=team.title()
 	url='http://statsapi.web.nhl.com/api/v1/teams'
-	team_list=requests.get(url)
+	try:
+		team_list=requests.get(url)
+	
+	except requests.exceptions.RequestException:    # This is the correct syntax
+    		pass
 	team_list=team_list.text[team_list.text.find(team)-50:team_list.text.find(team)]
 	teamID=team_list[team_list.find("id")+6:team_list.find("id")+8]
 	return (teamID,team)
@@ -23,7 +27,10 @@ def fetch_score1(teamID):
 	########################source 1###################
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
-	score=requests.get(url)
+	try:
+		score=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
 	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
 	score=int(score)
 	print ("source 1", score,now.hour, now.minute, now.second)
@@ -34,14 +41,20 @@ def fetch_score2(team):
 	team=team.upper()
 	now=datetime.datetime.now()
      	url="http://live.nhle.com/GameData/GCScoreboard/{:%Y-%m-%d}.jsonp".format(now)
-	MTL=requests.get(url)
+	try:
+		MTL=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
 	game_id=MTL.text[MTL.text.find(team):]
 	game_id=game_id[game_id.find(team):game_id.find("id")+14]
 	game_id = game_id[game_id.find("id")+4:]
 	
 	season_id = "20152016"
      	url="http://live.nhle.com/GameData/{}/{}/gc/gcbx.jsonp".format(season_id,game_id)
-	score=requests.get(url)
+	try:
+		score=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
 	score=score.text[score.text.find("goalSummary"):]
 	check='t1":"PIT'
 	score=score.count(check)
@@ -60,7 +73,10 @@ def check_if_game(teamID):
 	#embed()
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
-        gameday_url=requests.get(url)
+        try:
+		gameday_url=requests.get(url)
+	except requests.exceptions.RequestException:    # This is the correct syntax
+                pass
 	if "gamePk" in gameday_url.text:
 		return True
 	else:
