@@ -38,7 +38,7 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light ON
 	GPIO.output(7,False)
 	#Play sound
-	command_play_song='sudo mpg123 ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
+	command_play_song='sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
 	os.system(command_play_song)
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
