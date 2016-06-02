@@ -28,8 +28,8 @@ def get_team():
 	url='http://statsapi.web.nhl.com/api/v1/teams'
 	team_list=requests.get(url)
 	team_list=team_list.text[team_list.text.find(team)-50:team_list.text.find(team)]
-	teamID=team_list[team_list.find("id")+6:team_list.find("id")+8]
-	return teamID
+	team_id=team_list[team_list.find("id")+6:team_list.find("id")+8]
+	return team_id
 
 #Function to activate GPIO for goal light and Audio clip
 def activate_goal_light():
@@ -44,15 +44,15 @@ def activate_goal_light():
 	GPIO.output(7,True)
 
 #Function to get the score of the game
-def fetch_score(teamID):
+def fetch_score(team_id):
 	now=datetime.datetime.now()
-        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
+        url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
 	#Avoid request errors
 	try:
 		score=requests.get(url)
 	except requests.exceptions.RequestException:
                 pass
-	score=score.text[score.text.find("id\" : {}".format(teamID))-37:score.text.find("id\" : {}".format(teamID))-36]
+	score=score.text[score.text.find("id\" : {}".format(team_id))-37:score.text.find("id\" : {}".format(team_id))-36]
 	score=int(score)
 	print (score,now.hour, now.minute, now.second)
 	return score
@@ -66,10 +66,10 @@ def check_season():
 		return True
 
 #Function to check if there is a game now
-def check_if_game(teamID):
+def check_if_game(team_id):
 	#embed()
 	now=datetime.datetime.now()
-        url='http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(teamID,now)
+        url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
         try:
 		gameday_url=requests.get(url)
 	except requests.exceptions.RequestException:    # This is the correct syntax
@@ -105,18 +105,18 @@ season=False
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-	teamID=get_team() #choose and return teamID to setup code
+	team_id=get_team() #choose and return team_id to setup code
 	#infinite loop
 	while (1):
 		season=check_season() #check if in season
-		gameday=check_if_game(teamID) #check if game	
+		gameday=check_if_game(team_id) #check if game	
 		
 		time.sleep(2) #sleep 2 seconds to avoid errors in requests
 		
 		if season:
 			if gameday:
 				#Check score online and save score
-				new_score=fetch_score(teamID)
+				new_score=fetch_score(team_id)
 			    
 				#If new game, replace old score with 0
 				if old_score > new_score:
