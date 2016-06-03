@@ -19,8 +19,8 @@ GPIO.output(7,True)
 #requests_cache.install_cache()
 #requests_cache.clear()
 
-#Function to get team of user
 def get_team():
+""" Function to get team of user and return NHL team ID. Default team is CANADIENS. """
 	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
         if team is "":
 		team="Canadiens"
@@ -31,8 +31,8 @@ def get_team():
 	team_id=team_list[team_list.find("id")+6:team_list.find("id")+8]
 	return team_id
 
-#Function to activate GPIO for goal light and Audio clip
 def activate_goal_light():
+""" Function to activate GPIO for goal light and Audio clip. """
 	#select random audio clip
 	songrandom=random.randint(1, 3)
 	#Set pin 7 output at high for goal light ON
@@ -43,8 +43,8 @@ def activate_goal_light():
 	#Set pin 7 output at high for goal light OFF
 	GPIO.output(7,True)
 
-#Function to get the score of the game
 def fetch_score(team_id):
+""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
 	#Avoid request errors
@@ -57,16 +57,16 @@ def fetch_score(team_id):
 	print (score,now.hour, now.minute, now.second)
 	return score
 
-#Function to check if in season
 def check_season():
+""" Function to check if in season. Returns True if in season, False in off season. """
 	now = datetime.datetime.now()
 	if now.month in (7, 8, 9):
             	return False
 	else:
 		return True
 
-#Function to check if there is a game now
 def check_if_game(team_id):
+""" Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
 	#embed()
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
@@ -80,8 +80,9 @@ def check_if_game(team_id):
 	else:
 		return False
 
-#Function to sleep if not in season or no game
+
 def sleep(sleep_period):
+""" Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
 	now=datetime.datetime.now()
    	if "day" in sleep_period:
      		delta=datetime.timedelta(days=1)
