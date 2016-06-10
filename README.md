@@ -36,3 +36,5 @@ To test the response time of code, please execute the TEST_response_time.py whil
 
 ## TODO
 * Test response time after a goal is scored
+* Add option to select team thru webpage
+* make code pause between periods
