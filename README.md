@@ -8,7 +8,7 @@ Before using this file, make sur you have:
 
 python-pip, python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
 
-You can run setup_new.py or run the following commands manualy
+You can run setup_new.py or run the following commands manually
 
 run: 
 
