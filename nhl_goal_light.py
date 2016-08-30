@@ -20,7 +20,7 @@ GPIO.output(7,True)
 #requests_cache.clear()
 
 def get_team():
-""" Function to get team of user and return NHL team ID. Default team is CANADIENS. """
+	""" Function to get team of user and return NHL team ID. Default team is CANADIENS. """
 	team=raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
         if team is "":
 		team="Canadiens"
@@ -32,7 +32,7 @@ def get_team():
 	return team_id
 
 def activate_goal_light():
-""" Function to activate GPIO for goal light and Audio clip. """
+	""" Function to activate GPIO for goal light and Audio clip. """
 	#select random audio clip
 	songrandom=random.randint(1, 3)
 	#Set pin 7 output at high for goal light ON
@@ -44,7 +44,7 @@ def activate_goal_light():
 	GPIO.output(7,True)
 
 def fetch_score(team_id):
-""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
+	""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
 	#Avoid request errors
@@ -58,7 +58,7 @@ def fetch_score(team_id):
 	return score
 
 def check_season():
-""" Function to check if in season. Returns True if in season, False in off season. """
+	""" Function to check if in season. Returns True if in season, False in off season. """
 	now = datetime.datetime.now()
 	if now.month in (7, 8, 9):
             	return False
@@ -66,7 +66,7 @@ def check_season():
 		return True
 
 def check_if_game(team_id):
-""" Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
+	""" Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
 	#embed()
 	now=datetime.datetime.now()
         url='http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id,now)
@@ -82,7 +82,7 @@ def check_if_game(team_id):
 
 
 def sleep(sleep_period):
-""" Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
+	""" Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
 	now=datetime.datetime.now()
    	if "day" in sleep_period:
      		delta=datetime.timedelta(days=1)
@@ -98,7 +98,7 @@ def sleep(sleep_period):
     	time.sleep(sleep)
 
 #MAIN
-#init        	
+#init
 old_score=0
 new_score=0
 gameday=False
@@ -110,26 +110,26 @@ try:
 	#infinite loop
 	while (1):
 		season=check_season() #check if in season
-		gameday=check_if_game(team_id) #check if game	
-		
+		gameday=check_if_game(team_id) #check if game
+
 		time.sleep(2) #sleep 2 seconds to avoid errors in requests
-		
+
 		if season:
 			if gameday:
 				#Check score online and save score
 				new_score=fetch_score(team_id)
-			    
+
 				#If new game, replace old score with 0
 				if old_score > new_score:
 					old_score=0
-			
+
 				#If score change...
 				if new_score > old_score:
 					#save new score
 					old_score=new_score
 					activate_goal_light()
 					print "GOAL!"
-			
+
 				#If the button is pressed
 				if(GPIO.input(15)==0):
 					#save new score
@@ -141,8 +141,8 @@ try:
 		else:
 			print "OFF SEASON!"
 			sleep("season")
-						
-except KeyboardInterrupt:					
+
+except KeyboardInterrupt:
 	#requests_cache.clear()
 	#print "\nCache cleaned!"
 	#Restore GPIO to default state
