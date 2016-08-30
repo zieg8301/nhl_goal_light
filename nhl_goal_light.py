@@ -4,7 +4,9 @@ import datetime
 import time, os, random
 import requests
 #import requests_cache #If I can make the cache work to reduce data
-import RPi.GPIO as GPIO
+
+import RPi.GPIO as GPIO # comment this line when running on a standard OS
+#from lib import gpio_mock as GPIO # comment this line when running on a RPi
 
 #Setup GPIO on raspberry pi
 GPIO.setmode(GPIO.BOARD)
@@ -97,54 +99,54 @@ def sleep(sleep_period):
     	sleep=sleep.total_seconds()
     	time.sleep(sleep)
 
-#MAIN
-#init
-old_score=0
-new_score=0
-gameday=False
-season=False
+if __name__ == "__main__":
 
-print ("When a goal is scored, press the GOAL button...")
-try:
-	team_id=get_team() #choose and return team_id to setup code
-	#infinite loop
-	while (1):
-		season=check_season() #check if in season
-		gameday=check_if_game(team_id) #check if game
+	old_score=0
+	new_score=0
+	gameday=False
+	season=False
 
-		time.sleep(2) #sleep 2 seconds to avoid errors in requests
+	print ("When a goal is scored, press the GOAL button...")
+	try:
+		team_id=get_team() #choose and return team_id to setup code
+		#infinite loop
+		while (1):
+			season=check_season() #check if in season
+			gameday=check_if_game(team_id) #check if game
 
-		if season:
-			if gameday:
-				#Check score online and save score
-				new_score=fetch_score(team_id)
+			time.sleep(2) #sleep 2 seconds to avoid errors in requests
 
-				#If new game, replace old score with 0
-				if old_score > new_score:
-					old_score=0
+			if season:
+				if gameday:
+					#Check score online and save score
+					new_score=fetch_score(team_id)
 
-				#If score change...
-				if new_score > old_score:
-					#save new score
-					old_score=new_score
-					activate_goal_light()
-					print "GOAL!"
+					#If new game, replace old score with 0
+					if old_score > new_score:
+						old_score=0
 
-				#If the button is pressed
-				if(GPIO.input(15)==0):
-					#save new score
-					old_score=new_score
-					activate_goal_light()
+					#If score change...
+					if new_score > old_score:
+						#save new score
+						old_score=new_score
+						activate_goal_light()
+						print "GOAL!"
+
+					#If the button is pressed
+					if(GPIO.input(15)==0):
+						#save new score
+						old_score=new_score
+						activate_goal_light()
+				else:
+					print "No Game Today!"
+					sleep("day")
 			else:
-				print "No Game Today!"
-				sleep("day")
-		else:
-			print "OFF SEASON!"
-			sleep("season")
+				print "OFF SEASON!"
+				sleep("season")
 
-except KeyboardInterrupt:
-	#requests_cache.clear()
-	#print "\nCache cleaned!"
-	#Restore GPIO to default state
-	GPIO.cleanup()
-	print "GPIO cleaned! Goodbye!"
+	except KeyboardInterrupt:
+		#requests_cache.clear()
+		#print "\nCache cleaned!"
+		#Restore GPIO to default state
+		GPIO.cleanup()
+		print "GPIO cleaned! Goodbye!"
