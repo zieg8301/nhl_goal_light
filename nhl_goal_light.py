@@ -7,15 +7,15 @@ import random
 import requests
 # import requests_cache #If I can make the cache work to reduce data
 
-import RPi.GPIO as GPIO  # comment this line when running on a standard OS
-#from lib import gpio_mock as GPIO # comment this line when running on a RPi
+import RPi.GPIO as GPIO  # comment this line out when running on a standard OS (not RPi)
+#from lib import gpio_mock as GPIO # comment this line out when running on a RPi
 
 # Setup GPIO on raspberry pi
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # Tell the program you want to use pin number 15 as the input and pin 7 as output
-GPIO.setup(15, GPIO.IN)
+GPIO.setup(15, GPIO.IN) # If no input button connected, comment this line out
 GPIO.setup(7, GPIO.OUT)
 GPIO.output(7, True)
 
@@ -26,10 +26,11 @@ GPIO.output(7, True)
 
 def get_team():
     """ Function to get team of user and return NHL team ID. Default team is CANADIENS. """
-    team = raw_input("Enter team you want to setup goal light for (Default: CANADIENS) \n")
+    team = raw_input("Enter team you want to setup (without city) (Default: CANADIENS) \n")
     if team is "":
         team = "Canadiens"
     team = team.title()
+    # Set URL to list of NHL teams
     url = 'http://statsapi.web.nhl.com/api/v1/teams'
     team_list = requests.get(url)
     team_list = team_list.text[team_list.text.find(team) - 50:team_list.text.find(team)]
@@ -40,12 +41,12 @@ def get_team():
 def activate_goal_light():
     """ Function to activate GPIO for goal light and Audio clip. """
     # select random audio clip
-    songrandom = random.randint(1, 3)
+    songrandom = random.randint(1, 3) #Set random numbers depending on number of audio clips available
     # Set pin 7 output at high for goal light ON
     GPIO.output(7, False)
+    # Prepare commande to play sound (change file name if needed)
+    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
     # Play sound
-    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(
-        SongId=str(songrandom))
     os.system(command_play_song)
     # Set pin 7 output at high for goal light OFF
     GPIO.output(7, True)
@@ -53,23 +54,26 @@ def activate_goal_light():
 
 def fetch_score(team_id):
     """ Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
+    # Get current time
     now = datetime.datetime.now()
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(
-        team_id, now)
-    # Avoid request errors
+    #Set URL depending on team selected and time
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id, now)
+    # Avoid request errors (might still not catch errors)
     try:
         score = requests.get(url)
+        score = score.text[score.text.find("id\" : {}".format(team_id)) - 37:score.text.find("id\" : {}".format(team_id)) - 36]
+        score = int(score)
+        # Print score for test
+        print(score, now.hour, now.minute, now.second)
+        return score
     except requests.exceptions.RequestException:
-        pass
-    score = score.text[score.text.find("id\" : {}".format(
-        team_id)) - 37:score.text.find("id\" : {}".format(team_id)) - 36]
-    score = int(score)
-    print(score, now.hour, now.minute, now.second)
-    return score
+        print "Error encountered, returning 0"
+        return 0
 
 
 def check_season():
     """ Function to check if in season. Returns True if in season, False in off season. """
+    # Get current time
     now = datetime.datetime.now()
     if now.month in (7, 8, 9):
         return False
@@ -80,9 +84,10 @@ def check_season():
 def check_if_game(team_id):
     """ Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
     # embed()
+    # Get current time
     now = datetime.datetime.now()
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(
-        team_id, now)
+    #Set URL depending on team selected and time
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(team_id, now)
     try:
         gameday_url = requests.get(url)
     except requests.exceptions.RequestException:    # This is the correct syntax
@@ -96,10 +101,14 @@ def check_if_game(team_id):
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
+    # Get current time
     now = datetime.datetime.now()
+    # Set sleep time for no game today
     if "day" in sleep_period:
         delta = datetime.timedelta(days=1)
+    # Set sleep time for not in season
     elif "season" in sleep_period:
+        # If in August, 31 days else 30
         if now.month is 8:
             delta = datetime.timedelta(days=31)
         else:
@@ -125,7 +134,7 @@ if __name__ == "__main__":
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
 
-            time.sleep(2)  # sleep 2 seconds to avoid errors in requests
+            time.sleep(2)  # sleep 2 seconds to avoid errors in requests (might not be enough...)
 
             if season:
                 if gameday:
@@ -144,6 +153,7 @@ if __name__ == "__main__":
                         print "GOAL!"
 
                     # If the button is pressed
+                    # Comment out this section if no input button is connected to RPi
                     if(GPIO.input(15) == 0):
                         # save new score
                         old_score = new_score
@@ -156,8 +166,9 @@ if __name__ == "__main__":
                 sleep("season")
 
     except KeyboardInterrupt:
-        # requests_cache.clear()
+        # requests_cache.clear() # Clear requests cache
         # print "\nCache cleaned!"
+        
         # Restore GPIO to default state
         GPIO.cleanup()
         print "GPIO cleaned! Goodbye!"
