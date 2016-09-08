@@ -107,9 +107,9 @@ def check_if_game(team_id):
     try:
         gameday_url = requests.get(url)
         if "gamePk" in gameday_url.text:
-        return True
-    else:
-        return False
+            return True
+        else:
+            return False
     except requests.exceptions.RequestException:    # This is the correct syntax
         # Return True to allow for another pass for test
         print "Error encountered, returning True for check_game"
