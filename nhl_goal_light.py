@@ -65,7 +65,7 @@ def fetch_score(team_id):
     # Get current time
     now = datetime.datetime.now()
     # Set URL depending on team selected and time
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
         team_id, now)
     # Avoid request errors (might still not catch errors)
     try:
