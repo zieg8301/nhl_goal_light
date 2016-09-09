@@ -46,6 +46,7 @@ def fetch_score1(teamID):
         print "Error encountered, returning 0 for score"
         return 0
 
+
 def fetch_score2(team):
     ########################source 2###################
     now = datetime.datetime.now()
