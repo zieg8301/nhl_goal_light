@@ -32,6 +32,8 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 ###Audio
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
 
+##Tests
+To test the response time of sources, please execute the test_source.py while whatching game and note time of goal (not time of periode, but time of the day). The time of the source update will be printed to a text file. You can send me results so i can compile them and see which source updates the fastest.
 
 ## TODO
 * Test response time after a goal is scored
