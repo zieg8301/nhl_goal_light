@@ -32,18 +32,19 @@ def fetch_score1(teamID):
     now = datetime.datetime.now()
     url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
         teamID, now)
-    score = requests.get(url)
-    score = score.text[
-        score.text.find(
-            "id\" : {}".format(teamID)) -
-        37:score.text.find(
-            "id\" : {}".format(teamID)) -
-        36]
-    score = int(score)
-
-    #f1.write("source 1", score,now.hour, now.minute, now.second)
-    return score
-
+    try:
+        score = requests.get(url)
+        score = score.text[
+            score.text.find(
+                "id\" : {}".format(teamID)) -
+            37:score.text.find(
+                "id\" : {}".format(teamID)) -
+            36]
+        score = int(score)
+        return score
+    except requests.exceptions.RequestException:
+        print "Error encountered, returning 0 for score"
+        return 0
 
 def fetch_score2(team):
     ########################source 2###################
@@ -58,11 +59,14 @@ def fetch_score2(team):
     season_id = game_id[:4] + str(int(game_id[:4]) + 1)
     url = "http://live.nhle.com/GameData/%s/%s/gc/gcbx.jsonp" % (
         season_id, game_id)
-    score = requests.get(url)
-    score = score.text[score.text.find("goalSummary"):]
-    score = score.cout('t1...STL')
-    #print (score,now.hour, now.minute, now.second)
-    return score
+    try:
+        score = requests.get(url)
+        score = score.text[score.text.find("goalSummary"):]
+        score = score.cout('t1...STL')
+        return score
+    except requests.exceptions.RequestException:
+        print "Error encountered, returning 0 for score"
+        return 0
 
 if __name__ == "__main__":
 
