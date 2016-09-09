@@ -9,7 +9,7 @@ import requests
 # requests_cache.install_cache()
 # requests_cache.clear()
 
-f1 = open('./testfile.txt', 'a')
+f1 = open('./testfile.log', 'a')
 
 
 def get_team():
