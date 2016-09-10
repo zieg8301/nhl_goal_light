@@ -24,8 +24,8 @@ def get_team():
     team_list = team_list.text[
         team_list.text.find(team) -
         50:team_list.text.find(team)]
-    teamID = team_list[team_list.find("id") + 6:team_list.find("id") + 8]
-    return (teamID, team)
+    team_id = team_list[team_list.find("id") + 6:team_list.find("id") + 8]
+    return (team_id, team)
 
 
 def fetch_score1(teamID):
