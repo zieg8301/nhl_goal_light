@@ -13,6 +13,7 @@ f1 = open('./testfile.log', 'a')
 
 
 def get_team():
+	""" Function to get team of user and return NHL team ID. Default team is CANADIENS. """
     team = raw_input(
         "Enter team you want to setup goal light for (Default: CANADIENS) \n")
     if team is "":
@@ -28,6 +29,7 @@ def get_team():
 
 
 def fetch_score1(teamID):
+	""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
     ########################source 1###################
     now = datetime.datetime.now()
     # url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
@@ -50,6 +52,7 @@ def fetch_score1(teamID):
 
 
 def fetch_score2(team):
+	""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
     ########################source 2###################
     now = datetime.datetime.now()
     # url = "http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(
