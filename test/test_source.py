@@ -61,7 +61,7 @@ def fetch_score2(team):
     game_id = game_id[game_id.find("id") + 4:]
 
     season_id = game_id[:4] + str(int(game_id[:4]) + 1)
-    url = "http://live.nhle.com/GameData/{0!s}/{1!s}/gc/gcbx.jsonp".format(
+    url = "http://live.nhle.com/GameData/{0}/{1}/gc/gcbx.jsonp".format(
         season_id, game_id)
     try:
         score = requests.get(url)
