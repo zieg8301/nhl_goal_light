@@ -30,8 +30,10 @@ def get_team():
 def fetch_score1(teamID):
     ########################source 1###################
     now = datetime.datetime.now()
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
-        teamID, now)
+    # url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
+    #    teamID, now)
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date=2016-02-15'.format(
+        teamID)
     try:
         score = requests.get(url)
         score = score.text[
@@ -50,8 +52,9 @@ def fetch_score1(teamID):
 def fetch_score2(team):
     ########################source 2###################
     now = datetime.datetime.now()
-    url = "http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(
-        now)
+    # url = "http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(
+    #    now)
+    url = "http://live.nhle.com/GameData/GCScoreboard/date=2016-02-15.jsonp"
     MTL = requests.get(url)
     game_id = MTL.text[MTL.text.find(team):]
     game_id = game_id[MTL.text.find(team):MTL.text.find("id") + 14]
@@ -69,7 +72,7 @@ def fetch_score2(team):
         print "Error encountered, returning 0 for score"
         return 0
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
 old_score1 = 0
 new_score1 = 0
@@ -81,32 +84,26 @@ print ("When a goal is scored, press the GOAL button...")
 try:
     teamID, team = get_team()  # choose and return teamID to setup code
     while (1):
+	now = datetime.datetime.now()
         time.sleep(2)
-        gameday = check_if_game(teamID)  # check if game
         # Check score online and save score
         new_score1 = fetch_score1(teamID)
-        new_score2 = fetch_score2(team)
+        #new_score2 = fetch_score2(team)
 
         # If score change...
         if new_score1 > old_score1:
             # save new score
             old_score1 = new_score1
-            f1.write(
-                "GOAL source 1! Time : ",
-                now.hour,
-                now.minute,
-                now.second)
-                print ("source1 goal")
+	    text = ("GOAL source 1! Time : " + str(now.hour)+":" + str(now.minute)+":" + str(now.second)+"\n")
+            f1.write(text)
+	    print ("source1 goal")
 
         elif new_score2 > old_score2:
             # save new score
             old_score2 = new_score2
-            f1.write(
-                "GOAL source 2! Time : ",
-                now.hour,
-                now.minute,
-                now.second)
-                print("source2 goal")
+            text = ("GOAL source 2! Time : " + str(now.hour)+":" + str(now.minute)+":" + str(now.second)+"\n")
+            f1.write(text)
+            print("source2 goal")
 
 except KeyboardInterrupt:
     # requests_cache.clear()
