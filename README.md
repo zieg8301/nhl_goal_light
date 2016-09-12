@@ -18,7 +18,7 @@ You can run setup_new.py or run the following commands manually
 
 run:
 
-        $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip
+        $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip python-requests python-requests-cache
 or run:
 
         $ sudo apt-get install mpg123 python-pip
@@ -32,7 +32,7 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 * Red Rotating Beacon Warning Light from ebay
 * 5V 2 Channel Relay Module from ebay
 * Momentary OFF ON Push Round Button
-* 12V to 5V 1A adapter (used a car usb adapter)
+* 12V to 5V 1A adapter (used a car usb adapter) would be good to have a dual usb adapter in case you need to plug something else like a usb speaker.
 * 3.5mm audio extension cable
 
 ###Audio
