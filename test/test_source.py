@@ -28,21 +28,20 @@ def get_team():
     return (team_id, team)
 
 
-def fetch_score1(teamID):
+def fetch_score1(team_id):
 	""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
     ########################source 1###################
     now = datetime.datetime.now()
-    # url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
-    #    teamID, now)
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date=2016-02-15'.format(
-        teamID)
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
+       team_id, now)
+
     try:
         score = requests.get(url)
         score = score.text[
             score.text.find(
-                "id\" : {}".format(teamID)) -
+                "id\" : {}".format(team_id)) -
             37:score.text.find(
-                "id\" : {}".format(teamID)) -
+                "id\" : {}".format(team_id)) -
             36]
         score = int(score)
         return score
@@ -51,25 +50,26 @@ def fetch_score1(teamID):
         return 0
 
 
-def fetch_score2(team):
+def fetch_score2(team,team_id):
 	""" Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
     ########################source 2###################
     now = datetime.datetime.now()
     # url = "http://live.nhle.com/GameData/GCScoreboard/date={:%Y-%m-%d}.jsonp".format(
     #    now)
-    url = "http://live.nhle.com/GameData/GCScoreboard/date=2016-02-15.jsonp"
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
+       team_id, now)
     MTL = requests.get(url)
-    game_id = MTL.text[MTL.text.find(team):]
-    game_id = game_id[MTL.text.find(team):MTL.text.find("id") + 14]
-    game_id = game_id[game_id.find("id") + 4:]
-
-    season_id = game_id[:4] + str(int(game_id[:4]) + 1)
+    game_id = MTL.text[MTL.text.find("gamePk") + 10:]
+    if (now.month >= 9) :
+    	season_id = str(now.year) + str(now.year + 1)
+    else :
+    	season_id = str(now.year - 1) + str(now.year)
     url = "http://live.nhle.com/GameData/{0}/{1}/gc/gcbx.jsonp".format(
         season_id, game_id)
     try:
         score = requests.get(url)
         score = score.text[score.text.find("goalSummary"):]
-        score = score.cout('t1...STL')
+        score = score.cout('t1...MTL')
         return score
     except requests.exceptions.RequestException:
         print "Error encountered, returning 0 for score"
@@ -85,13 +85,13 @@ new_score2 = 0
 
 print ("When a goal is scored, press the GOAL button...")
 try:
-    teamID, team = get_team()  # choose and return teamID to setup code
+    team_id, team = get_team()  # choose and return teamID to setup code
     while (1):
 	now = datetime.datetime.now()
         time.sleep(2)
         # Check score online and save score
-        new_score1 = fetch_score1(teamID)
-        #new_score2 = fetch_score2(team)
+        new_score1 = fetch_score1(team_id)
+        new_score2 = fetch_score2(team,team_id)
 
         # If score change...
         if new_score1 > old_score1:
