@@ -1,6 +1,7 @@
 # NHL Goal Light
 
 [![closed pull requests](https://img.shields.io/github/issues-pr-closed/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/pulls?q=is%3Apr+is%3Aclosed)
+[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/arim215/NHL_goal_light.svg?maxAge=2592000)](https://github.com/arim215/nhl_goal_light/blob/master/requirements.txt)
 
 
 ##Overview
