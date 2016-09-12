@@ -1,0 +1,5 @@
+source 1 :
+http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(team_id, now)
+
+source 2 : 
+http://live.nhle.com/GameData/{0}/{1}/gc/gcbx.jsonp".format(season_id, game_id)
