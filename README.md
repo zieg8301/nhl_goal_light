@@ -1,8 +1,10 @@
 # NHL Goal Light
 
+[![GitHub release](https://img.shields.io/github/release/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/releases)
+[![GitHub commits](https://img.shields.io/github/commits-since/arim215/NHL_goal_light/v1.0.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
 [![closed pull requests](https://img.shields.io/github/issues-pr-closed/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/pulls?q=is%3Apr+is%3Aclosed)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/arim215/NHL_goal_light.svg?maxAge=2592000)](https://github.com/arim215/nhl_goal_light/blob/master/requirements.txt)
-
+[![license](https://img.shields.io/github/license/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/blob/master/LICENSE)
 
 ##Overview
 
