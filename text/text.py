@@ -24,7 +24,7 @@ tz_offset = int(tz_offset)
 
 
 def send_text(message):
-
+""" Sends text message to user """
     domains = {'verizon': 'vtext.com', 'att': 'txt.att.net',
                'tmobile': 'tmomail.net', 'sprint': 'messaging.sprintpcs.com',
                'virgin': 'vmobl.com', 'uscellular': 'email.uscc.net',
