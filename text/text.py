@@ -13,7 +13,7 @@ Use config file /home/$USER/.hockeytext
 """
 
 config = configparser.ConfigParser()
-config.read(os.getenv("HOME") + '/.hockeytext')
+config.read(os.getenv("HOME") + '/nhl_goal_light/text/.hockeytext')
 email = config.get('config', 'email')
 password = config.get('config', 'password')
 number = config.get('config', 'number')
