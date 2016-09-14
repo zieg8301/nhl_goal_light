@@ -44,4 +44,6 @@ To test the response time of sources, please execute the test_source.py while wh
 ## TODO
 * Test response time after a goal is scored
 * Add option to select team thru webpage
-* make code pause between periods
+* Make code pause between periods
+* Allow the addition of a I2C display
+* Add a text message service to notify goals and more
