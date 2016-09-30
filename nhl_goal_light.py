@@ -64,9 +64,9 @@ def fetch_score(team_id):
     """ Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
     # Get current time
     now = datetime.datetime.now()
-    # Set URL depending on team selected and time
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(
-        team_id, now)
+    # Set URL depending on team selected
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}'.format(
+        team_id)
     # Avoid request errors (might still not catch errors)
     try:
         score = requests.get(url)
@@ -97,12 +97,9 @@ def check_season():
 
 def check_if_game(team_id):
     """ Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
-    # embed()
-    # Get current time
-    now = datetime.datetime.now()
-    # Set URL depending on team selected and time
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}&date={:%Y-%m-%d}'.format(
-        team_id, now)
+    # Set URL depending on team selected
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}'.format(
+        team_id)
     # Need test to make sure error is avoided
     try:
         gameday_url = requests.get(url)
