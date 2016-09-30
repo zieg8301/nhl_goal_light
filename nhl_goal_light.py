@@ -129,7 +129,7 @@ def sleep(sleep_period):
         if now.month is 8:
             delta = datetime.timedelta(days=31)
         else:
-            delta = timedelta(days=30)
+            delta = datetime.timedelta(days=30)
     next_day = datetime.datetime.today() + delta
     next_day = next_day.replace(hour=0, minute=0)
     sleep = next_day - now
