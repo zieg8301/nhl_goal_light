@@ -5,7 +5,6 @@ import time
 import os
 import random
 import requests
-# import requests_cache #If I can make the cache work to reduce data
 
 # comment this line out when running on a standard OS (not RPi)
 import RPi.GPIO as GPIO
