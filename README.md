@@ -19,7 +19,7 @@ You can run setup_new.py or run the following commands manually
 
 run:
 
-        $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip python-requests python-requests-cache
+        $ sudo apt-get install python-dev python-rpi.gpio mpg123 python-pip python-requests
 or run:
 
         $ sudo apt-get install mpg123 python-pip
