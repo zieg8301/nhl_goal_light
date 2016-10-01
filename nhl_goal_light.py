@@ -157,15 +157,16 @@ if __name__ == "__main__":
                     # If score change...
                     if new_score > old_score:
                         # save new score
+                        print "GOAL!"
                         old_score = new_score
                         activate_goal_light()
-                        print "GOAL!"
 
                     # If the button is pressed
                     # Comment out this section if no input button is connected
                     # to RPi
                     if(GPIO.input(15) == 0):
                         # save new score
+                        print "GOAL!"
                         old_score = new_score
                         activate_goal_light()
                 else:
