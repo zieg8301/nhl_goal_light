@@ -51,8 +51,7 @@ def activate_goal_light():
     # Set pin 7 output at high for goal light ON
     GPIO.output(7, False)
     # Prepare commande to play sound (change file name if needed)
-    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(
-        SongId=str(songrandom))
+    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
     # Play sound
     os.system(command_play_song)
     # Set pin 7 output at high for goal light OFF
@@ -69,12 +68,7 @@ def fetch_score(team_id):
     # Avoid request errors (might still not catch errors)
     try:
         score = requests.get(url)
-        score = score.text[
-            score.text.find(
-                "id\" : {}".format(team_id)) -
-            37:score.text.find(
-                "id\" : {}".format(team_id)) -
-            36]
+        score = score.text[score.text.find('id\" : {}'.format(team_id)) - 37:score.text.find('id\" : {}'.format(team_id)) - 36]
         score = int(score)
         # Print score for test
         print(score, now.hour, now.minute, now.second)
