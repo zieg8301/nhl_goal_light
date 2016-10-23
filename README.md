@@ -42,6 +42,8 @@ If you wish to change the audio clips to sounds with your teams goal horn and mu
 ##Tests
 To test the response time of sources, please execute the test_source.py while whatching game and note time of goal (not time of periode, but time of the day). The time of the source update will be printed to a text file. You can send me results so i can compile them and see which source updates the fastest.
 
+I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so i added a delay to my code to make the goal horn start later. You'll need to adjust it to your stream to make it work best. 
+
 ## TODO
 * Test response time after a goal is scored
 * Add option to select team thru webpage
