@@ -156,6 +156,9 @@ if __name__ == "__main__":
 
                     # If score change...
                     if new_score > old_score:
+                        ########ADD DELAY HERE!########
+                        print "OOOOOHHHHHHH..."
+                        time.sleep(30)
                         # save new score
                         print "GOAL!"
                         old_score = new_score
