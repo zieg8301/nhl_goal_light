@@ -136,7 +136,8 @@ if __name__ == "__main__":
     print("When a goal is scored, press the GOAL button...")
     try:
         team_id = get_team()  # choose and return team_id to setup code
-        # infinite loop
+       	delay=raw_input("Enter delay required to sync")
+	# infinite loop
         while (1):
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
@@ -158,7 +159,7 @@ if __name__ == "__main__":
                     if new_score > old_score:
                         ########ADD DELAY HERE!########
                         print "OOOOOHHHHHHH..."
-                        time.sleep(15)
+                        time.sleep(delay)
                         # save new score
                         print "GOAL!"
                         old_score = new_score
