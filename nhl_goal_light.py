@@ -136,6 +136,8 @@ if __name__ == "__main__":
     try:
         team_id = get_team()  # choose and return team_id to setup code
        	delay=raw_input("Enter delay required to sync : \n")
+	if delay is "":
+		delay = 0
 	# infinite loop
         while (1):
             season = check_season()  # check if in season
