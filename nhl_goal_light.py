@@ -133,10 +133,9 @@ if __name__ == "__main__":
     gameday = False
     season = False
 
-    print("When a goal is scored, press the GOAL button...")
     try:
         team_id = get_team()  # choose and return team_id to setup code
-       	delay=raw_input("Enter delay required to sync")
+       	delay=raw_input("Enter delay required to sync : \n")
 	# infinite loop
         while (1):
             season = check_season()  # check if in season
