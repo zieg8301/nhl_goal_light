@@ -138,6 +138,7 @@ if __name__ == "__main__":
        	delay=raw_input("Enter delay required to sync : \n")
 	if delay is "":
 		delay = 0
+	delay=float(delay)
 	# infinite loop
         while (1):
             season = check_season()  # check if in season
