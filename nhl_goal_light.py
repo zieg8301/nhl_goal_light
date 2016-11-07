@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
             # sleep 2 seconds to avoid errors in requests (might not be
             # enough...)
-            time.sleep(2)
+            time.sleep(1)
 
             if season:
                 if gameday:
