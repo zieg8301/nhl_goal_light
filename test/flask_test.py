@@ -9,12 +9,13 @@ def hello_world():
 def sel_team():
     return """<html>
                 <body>
+                    Choose team :
                     <select>
-                        <option value="Canadiens">Canadiens</option>
+                        <option value="canadiens">Canadiens</option>
                         <option value="Bruins">Bruins</option>
                     </select>
                 </body>
-            </html>")"""
+            </html>"""
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0')
