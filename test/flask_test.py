@@ -5,5 +5,16 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
+@app.route('/options')
+def sel_team():
+    return """<html>
+                <body>
+                    <select>
+                        <option value="Canadiens">Canadiens</option>
+                        <option value="Bruins">Bruins</option>
+                    </select>
+                </body>
+            </html>")"""
+
 if __name__ == '__main__':
     app.run()
