@@ -25,7 +25,6 @@ def run_server():
 
 if __name__ == '__main__':
 
-	global time
 	time = 20
 	server = Process(target=app.run)
 	server.start()
