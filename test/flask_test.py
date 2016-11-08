@@ -15,11 +15,12 @@ def result():
    
       result = { 'team' : team, 'delay' : delay }
       print("Result : {}".format(result))
-
+      print (time)      
       return render_template("result.html",result = result)
+            
 
 if __name__ == '__main__':
 
-    app.run(host= '0.0.0.0', debug=True)    
-    global time
-    time = 20
+	global time
+	time = 20
+	app.run(host= '0.0.0.0', debug=True)
