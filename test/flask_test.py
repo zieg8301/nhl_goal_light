@@ -1,4 +1,6 @@
 from flask import Flask, render_template,request
+from multiprocessing import Process
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,13 +16,20 @@ def result():
       delay = request.form['Delay']
    
       result = { 'team' : team, 'delay' : delay }
-      print("Result : {}".format(result))
-      print (time)      
+      print("Result : {}".format(result))    
       return render_template("result.html",result = result)
             
+def run_server():
+    app.run(host= '0.0.0.0', debug=True)
+
 
 if __name__ == '__main__':
 
 	global time
 	time = 20
-	app.run(host= '0.0.0.0', debug=True)
+	server = Process(target=app.run)
+	server.start()
+	print ("test")
+	print (time)
+	server.terminate()
+	server.join()
