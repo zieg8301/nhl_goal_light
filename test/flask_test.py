@@ -12,8 +12,9 @@ def result():
 
       team = request.form['Team']
       delay = request.form['Delay']
-
-      result = { 'team' : team, 'delay' : delay }
+      testSelect = request.form['testSelect']
+    
+      result = { 'team' : team, 'delay' : delay , 'testSelect' : testSelect}
       ##result = { 'team' : team, 'delay' : delay , 'time' : time}
       print("Result : {}".format(result))
 
