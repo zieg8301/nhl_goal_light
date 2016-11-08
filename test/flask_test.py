@@ -13,7 +13,7 @@ def result():
       team = request.form['Team']
       delay = request.form['Delay']
    
-      result = { 'team' : team, 'delay' : delay , 'time' : time}
+      result = { 'team' : team, 'delay' : delay }
       print("Result : {}".format(result))
 
       return render_template("result.html",result = result)
