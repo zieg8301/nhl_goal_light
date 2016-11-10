@@ -28,7 +28,8 @@ if __name__ == '__main__':
 	time = 20
 	server = Process(target=run_server)
 	server.start()
-	print ("test")
-	print (time)
+	while (1):
+		print ("test")
+		print (time)
 	server.terminate()
 	server.join()
