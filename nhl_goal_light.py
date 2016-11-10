@@ -11,18 +11,6 @@ import RPi.GPIO as GPIO
 # from lib import gpio_mock as GPIO # comment this line out when running
 # on a RPi
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def goal_light_status():
-    result = {'team': team, 'delay': delay, 'score': old_score}
-    return render_template("result.html", result=result)
-
-
-def run_server():
-    app.run(host='0.0.0.0', debug=True)
-
 
 # Setup GPIO on raspberry pi
 GPIO.setmode(GPIO.BOARD)
@@ -39,6 +27,19 @@ GPIO.output(7, True)
 # requests_cache.clear()
 
 
+app = Flask(__name__)
+
+
+@app.route('/')
+def goal_light_status():
+    result = {'team': team, 'delay': delay, 'score': old_score}
+    return render_template("result.html", result=result)
+
+
+def run_server():
+    app.run(host='0.0.0.0', debug=True)
+
+    
 def definition():
     """ Function to init global variables to share with flask. """
     global old_score
@@ -159,7 +160,7 @@ if __name__ == "__main__":
     gameday = False
     season = False
 
-    server = Process(target=run_server)
+    #server = Process(target=run_server)
     
 
     try:
@@ -168,8 +169,9 @@ if __name__ == "__main__":
         if delay is "":
             delay = 0
         delay = float(delay)
-        server.start()
+        #server.start()
         # infinite loop
+        run_server()
         while (1):
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
@@ -220,6 +222,6 @@ if __name__ == "__main__":
         # Restore GPIO to default state
         GPIO.cleanup()
         print "GPIO cleaned!"
-        server.terminate()
-        server.join()
+        #server.terminate()
+        #server.join()
         print "Closed Server!"
