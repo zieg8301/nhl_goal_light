@@ -25,11 +25,14 @@ def run_server():
 
 if __name__ == '__main__':
 
-	time = 20
-	server = Process(target=run_server)
-	server.start()
-	while (1):
-		print ("test")
-		print (time)
-	server.terminate()
-	server.join()
+	try:
+		time = 20
+		server = Process(target=run_server)
+		server.start()
+		while (1):
+			print ("test")
+			print (time)
+				
+	except KeyboardInterrupt:
+		server.terminate()
+		server.join()
