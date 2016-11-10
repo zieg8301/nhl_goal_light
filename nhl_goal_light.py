@@ -40,6 +40,7 @@ GPIO.output(7, True)
 
 
 def definition():
+	""" Function to init global variables to share with flask. """
     global old_score
     old_score = 0
     global team
