@@ -169,9 +169,8 @@ if __name__ == "__main__":
         if delay is "":
             delay = 0
         delay = float(delay)
-        #server.start()
-        # infinite loop
-        run_server()
+        server.start()
+        infinite loop
         while (1):
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
@@ -222,6 +221,6 @@ if __name__ == "__main__":
         # Restore GPIO to default state
         GPIO.cleanup()
         print "GPIO cleaned!"
-        #server.terminate()
-        #server.join()
+        server.terminate()
+        server.join()
         print "Closed Server!"
