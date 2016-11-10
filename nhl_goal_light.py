@@ -1,21 +1,9 @@
 #!/usr/bin/python
-from flask import Flask, render_template,request
-from multiprocessing import Process
 import datetime
 import time
 import os
 import random
 import requests
-
-app = Flask(__name__)
-
-@app.route('/')
-def goal_light_status():
-	result = { 'team' : team, 'delay' : delay }
-	return render_template("result.html",result = result)
-
-def run_server():
-    app.run(host= '0.0.0.0', debug=True)
 
 # comment this line out when running on a standard OS (not RPi)
 import RPi.GPIO as GPIO
@@ -139,16 +127,11 @@ def sleep(sleep_period):
 
 if __name__ == "__main__":
 
-    global old_score
-    global team
     old_score = 0
     new_score = 0
     gameday = False
     season = False
 	
-    server = Process(target=run_server)
-    server.start()
-
     try:
         team_id = get_team()  # choose and return team_id to setup code
        	delay=raw_input("Enter delay required to sync : \n")
@@ -205,7 +188,5 @@ if __name__ == "__main__":
 
         # Restore GPIO to default state
         GPIO.cleanup()
-        print "GPIO cleaned!"
-	server.terminate()
-	server.join()
-	print "Closed Server!"
+        print "GPIO cleaned! Goodbye! \n"
+
