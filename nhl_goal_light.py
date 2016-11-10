@@ -37,6 +37,14 @@ GPIO.output(7, True)
 # requests_cache.clear()
 
 
+def definition():
+	global old_score
+	old_score = 0
+    	global team
+	team = None
+    	global delay
+	delay = 0
+
 def get_team():
     """ Function to get team of user and return NHL team ID. Default team is CANADIENS. """
     team = raw_input(
@@ -139,74 +147,72 @@ def sleep(sleep_period):
 
 if __name__ == "__main__":
 
-    global old_score
-    global team
-    global delay
-    old_score = 0
-    new_score = 0
-    gameday = False
-    season = False
+	definition()
+    	old_score = 0
+    	new_score = 0
+    	gameday = False
+    	season = False
 	
-    server = Process(target=run_server)
-    server.start()
+    	server = Process(target=run_server)
+    	server.start()
 
-    try:
-        team_id = get_team()  # choose and return team_id to setup code
-       	delay=raw_input("Enter delay required to sync : \n")
-	if delay is "":
-		delay = 0
-	delay=float(delay)
-	# infinite loop
-        while (1):
-            season = check_season()  # check if in season
-            gameday = check_if_game(team_id)  # check if game
+	try:
+        	team_id = get_team()  # choose and return team_id to setup code
+       		delay=raw_input("Enter delay required to sync : \n")
+		if delay is "":
+			delay = 0
+		delay=float(delay)
+		# infinite loop
+        	while (1):
+            	season = check_season()  # check if in season
+            	gameday = check_if_game(team_id)  # check if game
 
-            # sleep 2 seconds to avoid errors in requests (might not be
-            # enough...)
-            time.sleep(1)
+            	# sleep 2 seconds to avoid errors in requests (might not be
+            	# enough...)
+            	time.sleep(1)
 
-            if season:
-                if gameday:
-                    # Check score online and save score
-                    new_score = fetch_score(team_id)
+            	if season:
+                	if gameday:
+                    		# Check score online and save score
+                    		new_score = fetch_score(team_id)
 
-                    # If new game, replace old score with 0
-                    if old_score > new_score:
-                        old_score = 0
+                    		# If new game, replace old score with 0
+                    		if old_score > new_score:
+                        		old_score = 0
 
-                    # If score change...
-                    if new_score > old_score:
-                        ########ADD DELAY HERE!########
-                        print "OOOOOHHHHHHH..."
-                        time.sleep(delay)
-                        # save new score
-                        print "GOAL!"
-                        old_score = new_score
-                        activate_goal_light()
+                    		# If score change...
+                    		if new_score > old_score:
+                       			########ADD DELAY HERE!########
+                        		print "OOOOOHHHHHHH..."
+                        		time.sleep(delay)
+                        		# save new score
+                        		print "GOAL!"
+                        		old_score = new_score
+                        		activate_goal_light()
 
-                    # If the button is pressed
-                    # Comment out this section if no input button is connected
-                    # to RPi
-                    if(GPIO.input(15) == 0):
-                        # save new score
-                        print "GOAL!"
-                        old_score = new_score
-                        activate_goal_light()
-                else:
-                    print "No Game Today!"
-                    sleep("day")
-            else:
-                print "OFF SEASON!"
-                sleep("season")
+                    		# If the button is pressed
+                    		# Comment out this section if no input button is connected
+                    		# to RPi
+                    		if(GPIO.input(15) == 0):
+                        		# save new score
+                        		print "GOAL!"
+                        		old_score = new_score
+                        		activate_goal_light()
+                	else:
+				print "No Game Today!"
+                   		sleep("day")
+		else:
+			print "OFF SEASON!"
+                	sleep("season")
 
-    except KeyboardInterrupt:
-        print "Ctrl-C pressed"
-        # requests_cache.clear() # Clear requests cache
-        # print "\nCache cleaned!"
+	except KeyboardInterrupt:
+        	print "Ctrl-C pressed"
+        	# requests_cache.clear() # Clear requests cache
+        	# print "\nCache cleaned!"
 
-        # Restore GPIO to default state
-        GPIO.cleanup()
-        print "GPIO cleaned!"
-	server.terminate()
-	server.join()
-	print "Closed Server!"
+        	# Restore GPIO to default state
+        	GPIO.cleanup()
+        	print "GPIO cleaned!"
+		server.terminate()
+		server.join()
+		print "Closed Server!"
