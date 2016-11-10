@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def goal_light_status():
-	result = { 'team' : team, 'delay' : delay }
+	result = { 'team' : team, 'delay' : delay , 'score' : old_score }
 	return render_template("result.html",result = result)
 
 def run_server():
