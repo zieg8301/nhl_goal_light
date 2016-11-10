@@ -141,6 +141,7 @@ if __name__ == "__main__":
 
     global old_score
     global team
+    global delay
     old_score = 0
     new_score = 0
     gameday = False
