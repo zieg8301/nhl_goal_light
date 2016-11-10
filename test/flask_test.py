@@ -26,7 +26,7 @@ def run_server():
 if __name__ == '__main__':
 
 	time = 20
-	server = Process(target=app.run)
+	server = Process(target=run_server)
 	server.start()
 	print ("test")
 	print (time)
