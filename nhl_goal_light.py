@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
 from multiprocessing import Process
 import datetime
 import time
@@ -9,13 +9,15 @@ import requests
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def goal_light_status():
-	result = { 'team' : team, 'delay' : delay , 'score' : old_score }
-	return render_template("result.html",result = result)
+    result = {'team': team, 'delay': delay, 'score': old_score}
+    return render_template("result.html", result=result)
+
 
 def run_server():
-    app.run(host= '0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True)
 
 # comment this line out when running on a standard OS (not RPi)
 import RPi.GPIO as GPIO
@@ -38,12 +40,13 @@ GPIO.output(7, True)
 
 
 def definition():
-	global old_score
-	old_score = 0
-    	global team
-	team = None
-    	global delay
-	delay = 0
+    global old_score
+    old_score = 0
+    global team
+    team = None
+    global delay
+    delay = 0
+
 
 def get_team():
     """ Function to get team of user and return NHL team ID. Default team is CANADIENS. """
@@ -70,7 +73,8 @@ def activate_goal_light():
     # Set pin 7 output at high for goal light ON
     GPIO.output(7, False)
     # Prepare commande to play sound (change file name if needed)
-    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
+    command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(
+        SongId=str(songrandom))
     # Play sound
     os.system(command_play_song)
     # Set pin 7 output at high for goal light OFF
@@ -87,7 +91,8 @@ def fetch_score(team_id):
     # Avoid request errors (might still not catch errors)
     try:
         score = requests.get(url)
-        score = score.text[score.text.find('id\" : {}'.format(team_id)) - 37:score.text.find('id\" : {}'.format(team_id)) - 36]
+        score = score.text[score.text.find('id\" : {}'.format(
+            team_id)) - 37:score.text.find('id\" : {}'.format(team_id)) - 36]
         score = int(score)
         # Print score for test
         print(score, now.hour, now.minute, now.second)
@@ -147,72 +152,72 @@ def sleep(sleep_period):
 
 if __name__ == "__main__":
 
-	definition()
-    	old_score = 0
-    	new_score = 0
-    	gameday = False
-    	season = False
-	
-    	server = Process(target=run_server)
-    	server.start()
+    definition()
+    old_score = 0
+    new_score = 0
+    gameday = False
+    season = False
 
-	try:
-        	team_id = get_team()  # choose and return team_id to setup code
-       		delay=raw_input("Enter delay required to sync : \n")
-		if delay is "":
-			delay = 0
-		delay=float(delay)
-		# infinite loop
-        	while (1):
-            	season = check_season()  # check if in season
-            	gameday = check_if_game(team_id)  # check if game
+    server = Process(target=run_server)
+    server.start()
 
-            	# sleep 2 seconds to avoid errors in requests (might not be
-            	# enough...)
-            	time.sleep(1)
+    try:
+        team_id = get_team()  # choose and return team_id to setup code
+        delay = raw_input("Enter delay required to sync : \n")
+        if delay is "":
+            delay = 0
+        delay = float(delay)
+        # infinite loop
+        while (1):
+        season = check_season()  # check if in season
+        gameday = check_if_game(team_id)  # check if game
 
-            	if season:
-                	if gameday:
-                    		# Check score online and save score
-                    		new_score = fetch_score(team_id)
+        # sleep 2 seconds to avoid errors in requests (might not be
+        # enough...)
+        time.sleep(1)
 
-                    		# If new game, replace old score with 0
-                    		if old_score > new_score:
-                        		old_score = 0
+        if season:
+            if gameday:
+                # Check score online and save score
+                new_score = fetch_score(team_id)
 
-                    		# If score change...
-                    		if new_score > old_score:
-                       			########ADD DELAY HERE!########
-                        		print "OOOOOHHHHHHH..."
-                        		time.sleep(delay)
-                        		# save new score
-                        		print "GOAL!"
-                        		old_score = new_score
-                        		activate_goal_light()
+                # If new game, replace old score with 0
+                if old_score > new_score:
+                    old_score = 0
 
-                    		# If the button is pressed
-                    		# Comment out this section if no input button is connected
-                    		# to RPi
-                    		if(GPIO.input(15) == 0):
-                        		# save new score
-                        		print "GOAL!"
-                        		old_score = new_score
-                        		activate_goal_light()
-                	else:
-				print "No Game Today!"
-                   		sleep("day")
-		else:
-			print "OFF SEASON!"
-                	sleep("season")
+                # If score change...
+                if new_score > old_score:
+                    ########ADD DELAY HERE!########
+                    print "OOOOOHHHHHHH..."
+                    time.sleep(delay)
+                    # save new score
+                    print "GOAL!"
+                    old_score = new_score
+                    activate_goal_light()
 
-	except KeyboardInterrupt:
-        	print "Ctrl-C pressed"
-        	# requests_cache.clear() # Clear requests cache
-        	# print "\nCache cleaned!"
+                # If the button is pressed
+                # Comment out this section if no input button is connected
+                # to RPi
+                if(GPIO.input(15) == 0):
+                    # save new score
+                    print "GOAL!"
+                    old_score = new_score
+                    activate_goal_light()
+            else:
+                print "No Game Today!"
+                sleep("day")
+        else:
+            print "OFF SEASON!"
+            sleep("season")
 
-        	# Restore GPIO to default state
-        	GPIO.cleanup()
-        	print "GPIO cleaned!"
-		server.terminate()
-		server.join()
-		print "Closed Server!"
+    except KeyboardInterrupt:
+        print "Ctrl-C pressed"
+        # requests_cache.clear() # Clear requests cache
+        # print "\nCache cleaned!"
+
+        # Restore GPIO to default state
+        GPIO.cleanup()
+        print "GPIO cleaned!"
+        server.terminate()
+        server.join()
+        print "Closed Server!"
