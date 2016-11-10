@@ -6,6 +6,10 @@ import time
 import os
 import random
 import requests
+# comment this line out when running on a standard OS (not RPi)
+import RPi.GPIO as GPIO
+# from lib import gpio_mock as GPIO # comment this line out when running
+# on a RPi
 
 app = Flask(__name__)
 
@@ -19,10 +23,6 @@ def goal_light_status():
 def run_server():
     app.run(host='0.0.0.0', debug=True)
 
-# comment this line out when running on a standard OS (not RPi)
-import RPi.GPIO as GPIO
-# from lib import gpio_mock as GPIO # comment this line out when running
-# on a RPi
 
 # Setup GPIO on raspberry pi
 GPIO.setmode(GPIO.BOARD)
