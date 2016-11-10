@@ -160,7 +160,7 @@ if __name__ == "__main__":
     season = False
 
     server = Process(target=run_server)
-    server.start()
+    
 
     try:
         team_id = get_team()  # choose and return team_id to setup code
@@ -168,6 +168,7 @@ if __name__ == "__main__":
         if delay is "":
             delay = 0
         delay = float(delay)
+        server.start()
         # infinite loop
         while (1):
             season = check_season()  # check if in season
@@ -188,7 +189,7 @@ if __name__ == "__main__":
 
                     # If score change...
                     if new_score > old_score:
-                        ########ADD DELAY HERE!########
+                        #!!!!!!!!ADD DELAY HERE!!!!!!!
                         print "OOOOOHHHHHHH..."
                         time.sleep(delay)
                         # save new score
