@@ -169,46 +169,46 @@ if __name__ == "__main__":
         delay = float(delay)
         # infinite loop
         while (1):
-        season = check_season()  # check if in season
-        gameday = check_if_game(team_id)  # check if game
+			season = check_season()  # check if in season
+			gameday = check_if_game(team_id)  # check if game
 
-        # sleep 2 seconds to avoid errors in requests (might not be
-        # enough...)
-        time.sleep(1)
+			# sleep 2 seconds to avoid errors in requests (might not be
+			# enough...)
+			time.sleep(1)
 
-        if season:
-            if gameday:
-                # Check score online and save score
-                new_score = fetch_score(team_id)
+			if season:
+				if gameday:
+					# Check score online and save score
+					new_score = fetch_score(team_id)
 
-                # If new game, replace old score with 0
-                if old_score > new_score:
-                    old_score = 0
+					# If new game, replace old score with 0
+					if old_score > new_score:
+						old_score = 0
 
-                # If score change...
-                if new_score > old_score:
-                    ########ADD DELAY HERE!########
-                    print "OOOOOHHHHHHH..."
-                    time.sleep(delay)
-                    # save new score
-                    print "GOAL!"
-                    old_score = new_score
-                    activate_goal_light()
+					# If score change...
+					if new_score > old_score:
+						########ADD DELAY HERE!########
+						print "OOOOOHHHHHHH..."
+						time.sleep(delay)
+						# save new score
+						print "GOAL!"
+						old_score = new_score
+						activate_goal_light()
 
-                # If the button is pressed
-                # Comment out this section if no input button is connected
-                # to RPi
-                if(GPIO.input(15) == 0):
-                    # save new score
-                    print "GOAL!"
-                    old_score = new_score
-                    activate_goal_light()
-            else:
-                print "No Game Today!"
-                sleep("day")
-        else:
-            print "OFF SEASON!"
-            sleep("season")
+					# If the button is pressed
+					# Comment out this section if no input button is connected
+					# to RPi
+					if(GPIO.input(15) == 0):
+						# save new score
+						print "GOAL!"
+						old_score = new_score
+						activate_goal_light()
+				else:
+					print "No Game Today!"
+					sleep("day")
+			else:
+				print "OFF SEASON!"
+				sleep("season")
 
     except KeyboardInterrupt:
         print "Ctrl-C pressed"
