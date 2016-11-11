@@ -99,11 +99,11 @@ if __name__ == "__main__":
                     # If the button is pressed
                     # Comment out this section if no input button is connected
                     # to RPi
-                    if(GPIO.input(15) == 0):
-                        # save new score
-                        print("GOAL!")
-                        old_score = new_score
-                        activate_goal_light()
+                    # if(GPIO.input(15) == 0):
+                    #     # save new score
+                    #     print("GOAL!")
+                    #     old_score = new_score
+                    #     activate_goal_light()
                 else:
                     print("No Game Today!")
                     sleep("day")

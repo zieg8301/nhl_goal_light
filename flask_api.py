@@ -35,7 +35,7 @@ def team_id(team):
 def score(team):
     # Fetch and return the current score of the team
     response = { 'score': nhl.fetch_score(team) }
-    return jsonify(score)
+    return jsonify(response)
 
 
 @app.route('/api/v1/team/<team>/game')
