@@ -7,7 +7,7 @@ import requests
 
 # comment this line out when running on a standard OS (not RPi)
 import RPi.GPIO as GPIO
-# from lib import gpio_mock as GPIO # comment this line out when running
+#from lib import gpio_mock as GPIO # comment this line out when running
 # on a RPi
 
 # Setup GPIO on raspberry pi
@@ -35,10 +35,8 @@ def get_team():
     # Set URL to list of NHL teams
     url = 'http://statsapi.web.nhl.com/api/v1/teams'
     team_list = requests.get(url)
-    team_list = team_list.text[
-        team_list.text.find(team) -
-        50:team_list.text.find(team)]
-    team_id = team_list[team_list.find("id") + 6:team_list.find("id") + 8]
+    team_list = team_list.text[team_list.text.find(team) - 50:team_list.text.find(team)]
+    team_id = team_list[team_list.find("id") + 6:team_list.find("id") + 7]
     return team_id
 
 
@@ -52,18 +50,17 @@ def activate_goal_light():
     # Prepare commande to play sound (change file name if needed)
     command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
     # Play sound
-    os.system(command_play_song)
+    #os.system(command_play_song)
     # Set pin 7 output at high for goal light OFF
     GPIO.output(7, True)
 
 
 def fetch_score(team_id):
     """ Function to get the score of the game depending on the chosen team. Inputs the team ID and returns the score found on web. """
-    # Get current time
+    # Get current time                                                                                                                                                                                                                    
     now = datetime.datetime.now()
     # Set URL depending on team selected
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}'.format(
-        team_id)
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}'.format(team_id)
     # Avoid request errors (might still not catch errors)
     try:
         score = requests.get(url)
@@ -89,9 +86,9 @@ def check_season():
 
 def check_if_game(team_id):
     """ Function to check if there is a game now with chosen team. Inputs team ID. Returns True if game, False if NO game. """
+    now = datetime.datetime.now()
     # Set URL depending on team selected
-    url = 'http://statsapi.web.nhl.com/api/v1/schedule?team_id={}'.format(
-        team_id)
+    url = 'http://statsapi.web.nhl.com/api/v1/schedule?teamId={}&date={:%Y-%m-%d}'.format(team_id, now)
     # Need test to make sure error is avoided
     try:
         gameday_url = requests.get(url)
@@ -109,21 +106,24 @@ def sleep(sleep_period):
     """ Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
     # Get current time
     now = datetime.datetime.now()
-    # Set sleep time for no game today
-    if "day" in sleep_period:
-        delta = datetime.timedelta(days=1)
-    # Set sleep time for not in season
-    elif "season" in sleep_period:
-        # If in August, 31 days else 30
-        if now.month is 8:
-            delta = datetime.timedelta(days=31)
-        else:
-            delta = datetime.timedelta(days=30)
-    next_day = datetime.datetime.today() + delta
-    next_day = next_day.replace(hour=0, minute=0)
-    sleep = next_day - now
-    sleep = sleep.total_seconds()
-    time.sleep(sleep)
+    if type(sleep_period) is str:
+	    # Set sleep time for no game today
+	    if "day" in sleep_period:
+	        delta = datetime.timedelta(days=1)
+		print ('No game today! Sleeping for : {}'.format(delta))
+	    # Set sleep time for not in season
+	    elif "season" in sleep_period:
+	        # If in August, 31 days else 30
+	        if now.month is 8:
+	            delta = datetime.timedelta(days=31)
+	        else:
+	            delta = datetime.timedelta(days=30)
+	    	print ('Off season! Sleeping for : {}'.format(delta))
+	    next_day = datetime.datetime.today() + delta
+	    next_day = next_day.replace(hour=0, minute=0)
+	    sleep_period = next_day - now
+	    sleep_period = sleep_period.total_seconds()
+    time.sleep(sleep_period)
 
 if __name__ == "__main__":
 
@@ -143,7 +143,7 @@ if __name__ == "__main__":
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
 
-            # sleep 2 seconds to avoid errors in requests (might not be
+            # sleep to avoid errors in requests (might not be
             # enough...)
             time.sleep(1)
 
@@ -158,34 +158,30 @@ if __name__ == "__main__":
 
                     # If score change...
                     if new_score > old_score:
-                        ########ADD DELAY HERE!########
+                        #!!!!!!ADD DELAY HERE!!!!!!
                         print "OOOOOHHHHHHH..."
-                        time.sleep(delay)
+                        sleep(delay)
                         # save new score
                         print "GOAL!"
                         old_score = new_score
                         activate_goal_light()
 
                     # If the button is pressed
-                    # Comment out this section if no input button is connected
-                    # to RPi
+                    # Comment out this section if no input button is connected to RPi
                     if(GPIO.input(15) == 0):
                         # save new score
                         print "GOAL!"
                         old_score = new_score
                         activate_goal_light()
                 else:
-                    print "No Game Today!"
                     sleep("day")
             else:
-                print "OFF SEASON!"
                 sleep("season")
 
     except KeyboardInterrupt:
         print "Ctrl-C pressed"
         # requests_cache.clear() # Clear requests cache
         # print "\nCache cleaned!"
-
         # Restore GPIO to default state
         GPIO.cleanup()
         print "GPIO cleaned! Goodbye! \n"

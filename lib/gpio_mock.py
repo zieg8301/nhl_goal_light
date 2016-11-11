@@ -25,7 +25,7 @@ def output(pin, value):
 
 
 def input(pin):
-    print("Input 0 to pin {0}".format(s))
+    print("Input 0 to pin {0}".format(pin))
     return 0
 
 
