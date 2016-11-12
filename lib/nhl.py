@@ -76,9 +76,9 @@ def check_if_game(team):
     """ Function to check if there is a game now with chosen team. Returns True if game, False if NO game. """
 
     team_id = get_team_id(team)
-
+    now=datetime.datetime.now()
     # Set URL depending on team selected
-    url = '{}schedule?team_id={}'.format(NHL_API_URL, team_id)
+    url = '{}schedule?team_id={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
     # Need test to make sure error is avoided
     try:
         gameday_url = requests.get(url)
