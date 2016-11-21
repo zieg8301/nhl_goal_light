@@ -19,10 +19,10 @@ Run the following commands manually to install requirements
 
 run:
 
-        $ sudo apt-get install mpg123 python-pip 
+        $ sudo apt-get install mpg123 python3-pip 
 and run:
 
-        $ sudo pip install -r requirements.txt
+        $ sudo pip3 install -r requirements.txt
 
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
 
