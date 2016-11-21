@@ -6,8 +6,8 @@ import random
 import requests
 
 # comment this line out when running on a standard OS (not RPi)
-import RPi.GPIO as GPIO
-#from lib import gpio_mock as GPIO # comment this line out when running
+#import RPi.GPIO as GPIO
+from lib import gpio_mock as GPIO # comment this line out when running
 # on a RPi
 
 # Setup GPIO on raspberry pi
@@ -27,7 +27,7 @@ GPIO.output(7, True)
 
 def get_team():
     """ Function to get team of user and return NHL team ID. Default team is CANADIENS. """
-    team = raw_input(
+    team = input(
         "Enter team you want to setup (without city) (Default: CANADIENS) \n")
     if team is "":
         team = "Canadiens"
@@ -70,7 +70,7 @@ def fetch_score(team_id):
         print(score, now.hour, now.minute, now.second)
         return score
     except requests.exceptions.RequestException:
-        print "Error encountered, returning 0 for score"
+        print ("Error encountered, returning 0 for score")
         return 0
 
 
@@ -98,7 +98,7 @@ def check_if_game(team_id):
             return False
     except requests.exceptions.RequestException:    # This is the correct syntax
         # Return True to allow for another pass for test
-        print "Error encountered, returning True for check_game"
+        print ("Error encountered, returning True for check_game")
         return True
 
 
@@ -107,22 +107,22 @@ def sleep(sleep_period):
     # Get current time
     now = datetime.datetime.now()
     if type(sleep_period) is str:
-	    # Set sleep time for no game today
-	    if "day" in sleep_period:
-	        delta = datetime.timedelta(days=1)
-		print ('No game today! Sleeping for : {}'.format(delta))
-	    # Set sleep time for not in season
-	    elif "season" in sleep_period:
-	        # If in August, 31 days else 30
-	        if now.month is 8:
-	            delta = datetime.timedelta(days=31)
-	        else:
-	            delta = datetime.timedelta(days=30)
-	    	print ('Off season! Sleeping for : {}'.format(delta))
-	    next_day = datetime.datetime.today() + delta
-	    next_day = next_day.replace(hour=0, minute=0)
-	    sleep_period = next_day - now
-	    sleep_period = sleep_period.total_seconds()
+        # Set sleep time for no game today
+        if "day" in sleep_period:
+            delta = datetime.timedelta(days=1)
+            print ('No game today! Sleeping for : {}'.format(delta))
+        # Set sleep time for not in season
+        elif "season" in sleep_period:
+            # If in August, 31 days else 30
+            if now.month is 8:
+                delta = datetime.timedelta(days=31)
+            else:
+                delta = datetime.timedelta(days=30)
+            print ('Off season! Sleeping for : {}'.format(delta))
+        next_day = datetime.datetime.today() + delta
+        next_day = next_day.replace(hour=0, minute=0)
+        sleep_period = next_day - now
+        sleep_period = sleep_period.total_seconds()
     time.sleep(sleep_period)
 
 if __name__ == "__main__":
@@ -131,14 +131,14 @@ if __name__ == "__main__":
     new_score = 0
     gameday = False
     season = False
-	
+    
     try:
         team_id = get_team()  # choose and return team_id to setup code
-       	delay=raw_input("Enter delay required to sync : \n")
-	if delay is "":
-		delay = 0
-	delay=float(delay)
-	# infinite loop
+        delay=input("Enter delay required to sync : \n")
+        if delay is "":
+           delay = 0
+        delay=float(delay)
+    # infinite loop
         while (1):
             season = check_season()  # check if in season
             gameday = check_if_game(team_id)  # check if game
@@ -159,10 +159,10 @@ if __name__ == "__main__":
                     # If score change...
                     if new_score > old_score:
                         #!!!!!!ADD DELAY HERE!!!!!!
-                        print "OOOOOHHHHHHH..."
+                        print ("OOOOOHHHHHHH...")
                         sleep(delay)
                         # save new score
-                        print "GOAL!"
+                        print ("GOAL!")
                         old_score = new_score
                         activate_goal_light()
 
@@ -170,7 +170,7 @@ if __name__ == "__main__":
                     # Comment out this section if no input button is connected to RPi
                     if(GPIO.input(15) == 0):
                         # save new score
-                        print "GOAL!"
+                        print ("GOAL!")
                         old_score = new_score
                         activate_goal_light()
                 else:
@@ -179,10 +179,10 @@ if __name__ == "__main__":
                 sleep("season")
 
     except KeyboardInterrupt:
-        print "Ctrl-C pressed"
+        print ("Ctrl-C pressed")
         # requests_cache.clear() # Clear requests cache
-        # print "\nCache cleaned!"
+        # print ("\nCache cleaned!")
         # Restore GPIO to default state
         GPIO.cleanup()
-        print "GPIO cleaned! Goodbye! \n"
+        print ("GPIO cleaned! Goodbye! \n")
 
