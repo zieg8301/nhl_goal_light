@@ -9,11 +9,11 @@
 
 ##Overview
 
-Nhl goal light python for raspberry pi GPIO. Works with any team, just enter team **name without city** when prompted.
+Nhl goal light python3 for raspberry pi GPIO. Works with any team, just enter team **name without city** when prompted.
 
 Before using this file, make sure you have:
 
-python-pip, python-dev, python-rpi.gpio, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
+Python3, python3-pip, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
 
 Run the following commands manually to install requirements
 
