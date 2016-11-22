@@ -46,7 +46,7 @@ def fetch_score(team_name):
     now = datetime.datetime.now()
 
     # Set URL depending on team selected
-    url = '{}/schedule?teamId={}'.format(NHL_API_URL, team_id)
+    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
     # Avoid request errors (might still not catch errors)
     try:
         # TODO proper JSON parsing
@@ -78,7 +78,7 @@ def check_if_game(team):
     team_id = get_team_id(team)
     now=datetime.datetime.now()
     # Set URL depending on team selected
-    url = '{}schedule?team_id={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
     # Need test to make sure error is avoided
     try:
         gameday_url = requests.get(url)
