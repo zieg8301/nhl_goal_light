@@ -41,6 +41,9 @@ if __name__ == "__main__":
         team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
         if team == "":
             team = "Canadiens"
+        else:
+            team = team.title()
+        
 
         print("team : {}".format(team))
 
