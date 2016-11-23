@@ -6,9 +6,9 @@ import random
 import requests
 
 # comment this line out when running on a standard OS (not RPi)
-#import RPi.GPIO as GPIO
-from lib import gpio_mock as GPIO # comment this line out when running
-# on a RPi
+import RPi.GPIO as GPIO
+# comment this line out when running on a RPi
+#from lib import gpio_mock as GPIO 
 
 # Setup GPIO on raspberry pi
 GPIO.setmode(GPIO.BOARD)
