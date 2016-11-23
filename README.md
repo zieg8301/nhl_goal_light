@@ -19,13 +19,15 @@ Run the following commands manually to install requirements
 
 run:
 
-        $ sudo apt-get install mpg123 python3-pip
+        $ sudo apt-get install mpg123 python3-pip 
 and run:
 
         $ sudo pip3 install -r requirements.txt
+        
+**Always pass through code to read comments and see necessary inputs for your setup!!**
 
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
-
+***
 ###Materials
 
 * Raspberry Pi (currently using raspberry pi A model, but any model will work)
@@ -34,15 +36,15 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 * Momentary OFF ON Push Round Button
 * 12V to 5V 1A adapter (used a car usb adapter) would be good to have a dual usb adapter in case you need to plug something else like a usb speaker.
 * 3.5mm audio extension cable
-
+***
 ###Audio
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
-
+***
 ##Tests
 To test the response time of sources, please execute the test_source.py while whatching game and note time of goal (not time of periode, but time of the day). The time of the source update will be printed to a text file. You can send me results so i can compile them and see which source updates the fastest.
 
 I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so i added a delay to my code to make the goal horn start later. You'll need to adjust it to your stream to make it work best. 
-
+***
 ## TODO
 * Test response time after a goal is scored
 * Add option to select team thru webpage
