@@ -8,12 +8,11 @@ from lib import gpio_mock as GPIO
 
 def setup():
     """ Function to setup raspberry pi GPIO mode and warnings. PIN 7 OUT and PIN 15 IN """
+
     # Setup GPIO on raspberry pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
-
-    # Tell the program you want to use pin number 15 as the input and pin 7 as
-    # output
+    # Tell the program you want to use pin number 15 as the input and pin 7 as output
     GPIO.setup(15, GPIO.IN)  # If no input button connected, comment this line out
     GPIO.setup(7, GPIO.OUT)
     GPIO.output(7, True)
@@ -21,6 +20,7 @@ def setup():
 
 def activate_goal_light():
     """ Function to activate GPIO for goal light and Audio clip. """
+
     # select random audio clip
     # Set random numbers depending on number of audio clips available
     songrandom = random.randint(1, 3)
@@ -37,6 +37,7 @@ def activate_goal_light():
 
 def cleanup():
     """ Function to cleanup raspberry pi GPIO at end of code """
+
     # Restore GPIO to default state
     GPIO.cleanup()
     print("GPIO cleaned!")

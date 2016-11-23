@@ -5,6 +5,13 @@ app = Flask(__name__)
 from lib import nhl
 from lib import light
 
+""" 
+#mute flask to only errors
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+"""
+
 
 @app.route('/')
 def home():

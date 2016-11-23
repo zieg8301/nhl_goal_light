@@ -29,7 +29,8 @@ def sleep(sleep_period):
 
 if __name__ == "__main__":
 
-    API_URL = "http://localhost:8080/api/v1"
+    #change IP to API server (could be another goal light running on network to have 2 goal lights)
+    API_URL = "http://localhost:8080/api/v1/"
 
     old_score = 0
     new_score = 0
@@ -46,11 +47,13 @@ if __name__ == "__main__":
         
 
         print("team : {}".format(team))
-
+	
+        """ USELESS?????
         # query the api to get the ID
-        response = requests.get("{}/team/{}/id".format(API_URL, team))
+        response = requests.get("{}team/{}/id".format(API_URL, team))
         team_id = response.json()['id']
         print("team id : {}".format(team_id))
+	"""
 
         delay = input("Enter delay required to sync : \n")
         if delay is "":
@@ -62,24 +65,25 @@ if __name__ == "__main__":
         while (True):
 
             # check if in season
-            response = requests.get("{}/season".format(API_URL))
+            response = requests.get("{}season".format(API_URL))
             season = response.json()['season']
 
             print("season : {}".format(season))
 
             # check if game
-            response = requests.get("{}/team/{}/game".format(API_URL, team))
+            response = requests.get("{}team/{}/game".format(API_URL, team))
             gameday = response.json()['game']
 
-            # sleep 2 seconds to avoid errors in requests (might not be
-            # enough...)
+            print("gameday : {}".format(gameday))
+
+            # sleep to avoid errors in requests (might not be enough... added try to avoid errors)
             time.sleep(1)
 
             if season:
                 if gameday:
 
                     # Check score online and save score
-                    response = requests.get("{}/team/{}/score".format(API_URL, team))
+                    response = requests.get("{}team/{}/score".format(API_URL, team))
                     new_score = response.json()['score']
 
                     # If new game, replace old score with 0
@@ -96,16 +100,17 @@ if __name__ == "__main__":
                         old_score = new_score
 
                         # activate_goal_light()
-                        requests.get("{}/goal_light/activate".format(API_URL))
+                        requests.get("{}goal_light/activate".format(API_URL))
 
                     # If the button is pressed
-                    # Comment out this section if no input button is connected
-                    # to RPi
-                    # if(GPIO.input(15) == 0):
-                    #     # save new score
-                    #     print("GOAL!")
-                    #     old_score = new_score
-                    #     activate_goal_light()
+                    # Comment out this section if no input button is connected to RPi
+                    """ 
+                         if(GPIO.input(15) == 0):
+                         # save new score
+                         print("GOAL!")
+                         old_score = new_score
+                         activate_goal_light()
+                    """
                 else:
                     print("No Game Today!")
                     sleep("day")

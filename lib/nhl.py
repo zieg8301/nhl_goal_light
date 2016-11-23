@@ -8,7 +8,6 @@ def get_teams():
     """ Function to get a list of all the teams name"""
 
     url = '{}/teams'.format(NHL_API_URL)
-
     response = requests.get(url)
     results = response.json()
     teams = []
@@ -23,7 +22,6 @@ def get_team_id(team_name):
     """ Function to get team of user and return NHL team ID"""
 
     url = '{}/teams'.format(NHL_API_URL)
-
     response = requests.get(url)
     results = response.json()
     teams = []
