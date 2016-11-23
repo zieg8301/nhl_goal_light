@@ -1,13 +1,13 @@
 import random
 import os
 # Comment this line out when running on a standard OS (not RPi)
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 # Comment this line out when running on a RPi
-#from lib import gpio_mock as GPIO
+from lib import gpio_mock as GPIO
 
 
 def setup():
-
+    """ Function to setup raspberry pi GPIO mode and warnings. PIN 7 OUT and PIN 15 IN """
     # Setup GPIO on raspberry pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
@@ -36,6 +36,7 @@ def activate_goal_light():
 
 
 def cleanup():
+    """ Function to cleanup raspberry pi GPIO at end of code """
     # Restore GPIO to default state
     GPIO.cleanup()
     print("GPIO cleaned!")
