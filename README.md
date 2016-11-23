@@ -23,6 +23,8 @@ run:
 and run:
 
         $ sudo pip3 install -r requirements.txt
+        
+**Always pass thru code to read comments and see necessary inputs for your setup!!**
 
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
 
