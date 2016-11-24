@@ -48,12 +48,11 @@ if __name__ == "__main__":
 
         print("team : {}".format(team))
 	
-        """ USELESS?????
         # query the api to get the ID
         response = requests.get("{}team/{}/id".format(API_URL, team))
         team_id = response.json()['id']
         print("team id : {}".format(team_id))
-	"""
+
 
         delay = input("Enter delay required to sync : \n")
         if delay is "":
@@ -71,7 +70,7 @@ if __name__ == "__main__":
             print("season : {}".format(season))
 
             # check if game
-            response = requests.get("{}team/{}/game".format(API_URL, team))
+            response = requests.get("{}team/{}/game".format(API_URL, team_id))
             gameday = response.json()['game']
 
             print("gameday : {}".format(gameday))
@@ -83,7 +82,7 @@ if __name__ == "__main__":
                 if gameday:
 
                     # Check score online and save score
-                    response = requests.get("{}team/{}/score".format(API_URL, team))
+                    response = requests.get("{}team/{}/score".format(API_URL, team_id))
                     new_score = response.json()['score']
 
                     # If new game, replace old score with 0

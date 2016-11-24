@@ -5,12 +5,12 @@ app = Flask(__name__)
 from lib import nhl
 from lib import light
 
-""" 
+ 
 #mute flask to only errors
 import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
-"""
+
 
 
 @app.route('/')
@@ -38,16 +38,16 @@ def team_id(team):
     return jsonify(response)
 
 
-@app.route('/api/v1/team/<team>/score')
-def score(team):
+@app.route('/api/v1/team/<team_id>/score')
+def score(team_id):
     # Fetch and return the current score of the team
-    response = { 'score': nhl.fetch_score(team) }
+    response = { 'score': nhl.fetch_score(team_id) }
     return jsonify(response)
 
 
-@app.route('/api/v1/team/<team>/game')
-def game(team):
-    response = { 'game' : nhl.check_if_game(team)}
+@app.route('/api/v1/team/<team_id>/game')
+def game(team_id):
+    response = { 'game' : nhl.check_if_game(team_id)}
     return jsonify(response)
 
 

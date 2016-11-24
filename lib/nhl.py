@@ -33,12 +33,9 @@ def get_team_id(team_name):
     raise Exception("Could not find ID for team {}".format(team_name))
 
 
-def fetch_score(team_name):
+def fetch_score(team_id):
     """ Function to get the score of the game depending on the chosen team.
     Inputs the team ID and returns the score found on web. """
-
-    # Get the ID for the current time
-    team_id = get_team_id(team_name)
 
     # Get current time
     now = datetime.datetime.now()
@@ -70,10 +67,9 @@ def check_season():
         return True
 
 
-def check_if_game(team):
+def check_if_game(team_id):
     """ Function to check if there is a game now with chosen team. Returns True if game, False if NO game. """
 
-    team_id = get_team_id(team)
     now=datetime.datetime.now()
     # Set URL depending on team selected
     url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
