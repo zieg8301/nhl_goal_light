@@ -1,9 +1,9 @@
 import random
 import os
 # Comment this line out when running on a standard OS (not RPi)
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 # Comment this line out when running on a RPi
-from lib import gpio_mock as GPIO
+#from lib import gpio_mock as GPIO
 
 
 def setup():
