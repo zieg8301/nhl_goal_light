@@ -118,4 +118,4 @@ if __name__ == "__main__":
                 sleep("season")
 
     except KeyboardInterrupt:
-        print("Ctrl-C pressed")
+        print("\nCtrl-C pressed")
