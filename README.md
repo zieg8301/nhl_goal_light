@@ -1,7 +1,7 @@
 # NHL Goal Light
 
 [![GitHub release](https://img.shields.io/github/release/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/releases)
-[![GitHub commits](https://img.shields.io/github/commits-since/arim215/NHL_goal_light/v1.1.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
+[![GitHub commits](https://img.shields.io/github/commits-since/arim215/NHL_goal_light/v2.0.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
 [![closed pull requests](https://img.shields.io/github/issues-pr-closed/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/pulls?q=is%3Apr+is%3Aclosed)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/blob/master/requirements.txt)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/c0f4d36de7234c45bb7689af5a35c7ec/badge.svg)](https://www.quantifiedcode.com/app/project/c0f4d36de7234c45bb7689af5a35c7ec)
@@ -11,25 +11,29 @@
 
 Nhl goal light python3 for raspberry pi GPIO. Works with any team, just enter team **name without city** when prompted.
 
-Before using this file, make sure you have:
+Before use, make sure you have:
 
-Python3, python3-pip, mpg123, goal_horn_1.mp3, goal_horn_2.mp3, goal_horn_3.mp3
+Python3, python3-pip, mpg123, git
 
 Run the following commands manually to install requirements
 
 run:
 
-        $ sudo apt-get install mpg123 python3-pip 
-and run:
-
+        $ sudo apt-get install git mpg123 python3 python3-pip
+	$ sudo git clone https://github.com/arim215/nhl_goal_light.git 
         $ sudo pip3 install -r requirements.txt
         
 **Always pass through code to read comments and see necessary inputs for your setup!!**
 
-For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
+To start application, use following commands:
+	
+	$ sudo python3 flask_api.py &
+	$ sudo python3 nhl_goal_light.py
 
 ***
 ###Materials
+
+For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
 
 * Raspberry Pi (currently using raspberry pi A model, but any model will work)
 * Red Rotating Beacon Warning Light from ebay
@@ -43,10 +47,9 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
 
 ***
-##Tests
-To test the response time of sources, please execute the test_source.py while whatching game and note time of goal (not time of periode, but time of the day). The time of the source update will be printed to a text file. You can send me results so i can compile them and see which source updates the fastest.
+##Delay
 
-I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so i added a delay to my code to make the goal horn start later. You'll need to adjust it to your stream to make it work best. 
+I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.  
 
 ***
 ## TODO
