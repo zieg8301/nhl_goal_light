@@ -67,6 +67,13 @@ if __name__ == "__main__":
 
         while (True):
 
+            #If the button is pressed, activate light and sound
+            #Comment out this section if no input button or not on RPI
+
+            if(GPIO.input(15) == 0 ):
+               print ("Button Pressed!")
+               requests.get("{}goal_light/activate".format(API_URL))
+
             # check if in season
             response = requests.get("{}season".format(API_URL))
             season = response.json()['season']
@@ -101,19 +108,9 @@ if __name__ == "__main__":
                         # save new score
                         print("GOAL!")
                         old_score = new_score
-
                         # activate_goal_light()
                         requests.get("{}goal_light/activate".format(API_URL))
 
-                    # If the button is pressed
-                    # Comment out this section if no input button is connected to RPi
-                    """ 
-                         if(GPIO.input(15) == 0):
-                         # save new score
-                         print("GOAL!")
-                         old_score = new_score
-                         activate_goal_light()
-                    """
                 else:
                     print("No Game Today!")
                     sleep("day")
