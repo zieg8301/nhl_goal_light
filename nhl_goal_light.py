@@ -30,7 +30,11 @@ def sleep(sleep_period):
 if __name__ == "__main__":
 
     #change IP to API server (could be another goal light running on network to have 2 goal lights)
-    API_URL = "http://localhost:8080/api/v1/"
+    API_URL = input("Enter Flask API IP or URL. (If empty, default will be localhost) \n")
+    if API_URL == "" :
+        API_URL = "http://localhost:8080/api/v1/"
+    else :
+        API_URL = "http://" + API_URL + ":8080/api/v1/"
 
     old_score = 0
     new_score = 0
