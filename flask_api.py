@@ -63,7 +63,8 @@ if __name__ == "__main__":
     light.setup()
 
     print("Starting the Flask app ...")
-    app.run(host='0.0.0.0', port=8080, debug=True)
+#    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)
 
     print("\nCleanup of the GOAL light")
     light.cleanup()
