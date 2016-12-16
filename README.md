@@ -19,16 +19,16 @@ Run the following commands manually to install requirements
 
 run:
 
-        $ sudo apt-get install git mpg123 python3 python3-pip
-	$ sudo git clone https://github.com/arim215/nhl_goal_light.git 
-        $ sudo pip3 install -r requirements.txt
+  	$ sudo apt-get install git mpg123 python3 python3-pip
+		$ sudo git clone https://github.com/arim215/nhl_goal_light.git 
+  	$ sudo pip3 install -r requirements.txt
         
 **Always pass through code to read comments and see necessary inputs for your setup!!**
 
 To start application, use following commands:
 	
-	$ sudo python3 flask_api.py &
-	$ sudo python3 nhl_goal_light.py
+		$ sudo python3 flask_api.py &
+		$ sudo python3 nhl_goal_light.py
 
 ***
 ###Materials
