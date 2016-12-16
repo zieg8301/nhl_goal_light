@@ -16,8 +16,7 @@ def setup():
     # Setup GPIO on raspberry pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
-    # Tell the program you want to use pin number 15 as the input and pin 7 as output
-    GPIO.setup(15, GPIO.IN)  # If no input button connected, comment this line out
+    # Tell the program you want to use pin number 7 as output
     GPIO.setup(7, GPIO.OUT)
     GPIO.output(7, True)
 
