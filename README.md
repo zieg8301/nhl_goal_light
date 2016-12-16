@@ -27,8 +27,8 @@ run:
 
 To start application, use following commands:
 	
-		$ sudo python3 flask_api.py &
-		$ sudo python3 nhl_goal_light.py
+    $ sudo python3 flask_api.py &
+    $ sudo python3 nhl_goal_light.py
 
 ***
 ###Materials
