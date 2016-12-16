@@ -1,9 +1,13 @@
 import random
 import os
-# Comment this line out when running on a standard OS (not RPi)
-import RPi.GPIO as GPIO
-# Comment this line out when running on a RPi
-#from lib import gpio_mock as GPIO
+import platform
+
+if "armv" in platform.machine() :
+    # import GPIO if running on RPI
+    import RPi.GPIO as GPIO
+else :
+    # import gpio_mock if not running on RPI
+    from lib import gpio_mock as GPIO
 
 
 def setup():

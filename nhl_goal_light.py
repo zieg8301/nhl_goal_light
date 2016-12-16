@@ -4,7 +4,14 @@ import datetime
 import time
 import os
 import requests
+import platform
 
+if "armv" in platform.machine() :
+    # import RPI GPIO if running on RPI
+    import RPi.GPIO as GPIO
+else :
+    # import mock GPIO if not running on RPI
+    from lib import gpio_mock as GPIO
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game. Inputs sleep period depending if it's off season or no game."""
@@ -26,53 +33,56 @@ def sleep(sleep_period):
     sleep = sleep.total_seconds()
     time.sleep(sleep)
 
-
-if __name__ == "__main__":
-
+def setup_nhl():
+    """Function to setup the nhl_goal_light.py with team, team_id and API_URL"""
     #change IP to API server (could be another goal light running on network to have 2 goal lights)
     API_URL = input("Enter Flask API IP or URL. (If empty, default will be localhost) \n")
     if API_URL == "" :
         API_URL = "http://localhost:8080/api/v1/"
     else :
         API_URL = "http://" + API_URL + ":8080/api/v1/"
+	
+	  # Choose and return team_id to setup code
+    team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
+    if team == "":
+        team = "Canadiens"
+    else:
+        team = team.title()
+    print("team : {}".format(team))
+	
+	  # query the api to get the ID
+    response = requests.get("{}team/{}/id".format(API_URL, team))
+    team_id = response.json()['id']
+    print("team id : {}".format(team_id))
+
+    delay = input("Enter delay required to sync : \n")
+    if delay is "":
+        delay = 0
+    delay = float(delay)
+    print("delay : {}".format(delay))
+
+    return (team_id,API_URL,delay)
+	  
+
+if __name__ == "__main__":
 
     old_score = 0
     new_score = 0
     gameday = False
     season = False
 
+    team_id, API_URL, delay = setup_nhl()
+
     try:
-        # Choose and return team_id to setup code
-        team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
-        if team == "":
-            team = "Canadiens"
-        else:
-            team = team.title()
         
-
-        print("team : {}".format(team))
-	
-        # query the api to get the ID
-        response = requests.get("{}team/{}/id".format(API_URL, team))
-        team_id = response.json()['id']
-        print("team id : {}".format(team_id))
-
-
-        delay = input("Enter delay required to sync : \n")
-        if delay is "":
-            delay = 0
-        delay = float(delay)
-
-        print("delay : {}".format(delay))
-
         while (True):
 
             #If the button is pressed, activate light and sound
             #Comment out this section if no input button or not on RPI
-
-            if(GPIO.input(15) == 0 ):
-               print ("Button Pressed!")
-               requests.get("{}goal_light/activate".format(API_URL))
+            if "armv" in platform.machine() :
+                if(GPIO.input(15) == 0 ):
+                    print ("Button Pressed!")
+                    requests.get("{}goal_light/activate".format(API_URL))
 
             # check if in season
             response = requests.get("{}season".format(API_URL))
