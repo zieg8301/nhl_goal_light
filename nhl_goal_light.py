@@ -48,20 +48,10 @@ def setup_nhl():
         # get settings from file
         f = open('settings.txt', 'r')
         lines = f.readlines()
-        #find team_id
-        try :
-            team_id = lines[1].strip('\n')
-        except IndexError :
-            team_id = ""
-        if team_id == "":
-            team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
-            if team == "":
-                team = "Canadiens"
-            else:
-                team = team.title()
+        
         #find API_URL      
         try :
-            API_URL = lines[2].strip('\n')
+            API_URL = lines[1].strip('\n')
         except IndexError :
             API_URL = ""
         if API_URL == "":
@@ -70,6 +60,22 @@ def setup_nhl():
                 API_URL = "http://localhost:8080/api/v1/"
             else:
                 API_URL = "http://" + API_URL + ":8080/api/v1/"
+        
+        #find team_id
+        try :
+            team_id = lines[2].strip('\n')
+        except IndexError :
+            team_id = ""
+        if team_id == "":
+            team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
+            if team == "":
+                team = "Canadiens"
+            else:
+                team = team.title()
+        # query the api to get the ID
+        response = requests.get("{}team/{}/id".format(API_URL, team))
+        team_id = response.json()['id']
+        
         #find delay
         try:
             delay = lines[3].strip('\n')

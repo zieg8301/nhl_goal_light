@@ -1,1 +1,1 @@
-Enter team ID, API URL, delay each on a separate line in this order. LEAVE EMPTY if you want to manually input every time.
+Enter API URL, team_id, delay, each on a separate line in this order. LEAVE EMPTY if you want to manually input every time.
