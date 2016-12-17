@@ -48,41 +48,39 @@ def setup_nhl():
         # get settings from file
         f = open('settings.txt', 'r')
         lines = f.readlines()
-        team_id = lines[1].strip('\n')
-        API_URL = lines[2].strip('\n')
-        delay = lines[3].strip('\n')
-
-    else:
-        # input settings
-        # change IP to API server (could be another goal light running on
-        # network to have 2 goal lights)
-        API_URL = input(
-            "Enter Flask API IP or URL. (If empty, default will be localhost) \n")
+        #find team_id
+        try :
+            team_id = lines[1].strip('\n')
+        except IndexError :
+            team_id = ""
+        if team_id == "":
+            team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
+            if team == "":
+                team = "Canadiens"
+            else:
+                team = team.title()
+        #find API_URL      
+        try :
+            API_URL = lines[2].strip('\n')
+        except IndexError :
+            API_URL = ""
         if API_URL == "":
-            API_URL = "http://localhost:8080/api/v1/"
-        else:
-            API_URL = "http://" + API_URL + ":8080/api/v1/"
-
-        # Choose and return team_id to setup code
-        team = input(
-            "Enter team you want to setup (without city) (Default: Canadiens) \n")
-        if team == "":
-            team = "Canadiens"
-        else:
-            team = team.title()
-        print("team : {}".format(team))
-
-        # query the api to get the ID
-        response = requests.get("{}team/{}/id".format(API_URL, team))
-        team_id = response.json()['id']
-        print("team id : {}".format(team_id))
-
-        delay = input("Enter delay required to sync : \n")
+            API_URL = input("Enter Flask API IP or URL. (If empty, default will be localhost) \n")
+            if API_URL == "":
+                API_URL = "http://localhost:8080/api/v1/"
+            else:
+                API_URL = "http://" + API_URL + ":8080/api/v1/"
+        #find delay
+        try:
+            delay = lines[3].strip('\n')
+        except IndexError :
+            delay = ""
         if delay is "":
-            delay = 0
+            delay = input("Enter delay required to sync : \n")
+            if delay is "":
+                delay = 0
         delay = float(delay)
-        print("delay : {}".format(delay))
-
+    print (team_id, API_URL, delay)
     return (team_id, API_URL, delay)
 
 
