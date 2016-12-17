@@ -1,7 +1,7 @@
 # NHL Goal Light
 
 [![GitHub release](https://img.shields.io/github/release/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/releases)
-[![GitHub commits](https://img.shields.io/github/commits-since/arim215/NHL_goal_light/v2.0.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
+[![GitHub commits](https://img.shields.io/github/commits-since/arim215/NHL_goal_light/v2.1.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
 [![closed pull requests](https://img.shields.io/github/issues-pr-closed/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/pulls?q=is%3Apr+is%3Aclosed)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/arim215/NHL_goal_light.svg)](https://github.com/arim215/nhl_goal_light/blob/master/requirements.txt)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/c0f4d36de7234c45bb7689af5a35c7ec/badge.svg)](https://www.quantifiedcode.com/app/project/c0f4d36de7234c45bb7689af5a35c7ec)
@@ -24,7 +24,8 @@ run:
   	$ sudo pip3 install -r requirements.txt
         
 **Always pass through code to read comments and see necessary inputs for your setup!!**
-You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime.
+
+You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime. You can run the flask API ($ sudo python3 flask_api.py) to find your team_id (Ex: FLASK_API_IP/api/v1/team/Canadiens/id will return "id : 8").
 
 To start application, use following commands:
 	
