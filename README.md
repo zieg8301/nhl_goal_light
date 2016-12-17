@@ -24,6 +24,7 @@ run:
   	$ sudo pip3 install -r requirements.txt
         
 **Always pass through code to read comments and see necessary inputs for your setup!!**
+You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime.
 
 To start application, use following commands:
 	
