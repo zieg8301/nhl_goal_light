@@ -1,0 +1,4 @@
+Enter team ID, API URL, delay each on a separate line in this order.
+8
+0.0.0.0
+5

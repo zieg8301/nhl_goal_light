@@ -6,10 +6,10 @@ import os
 import requests
 import platform
 
-if "armv" in platform.machine() :
+if "armv" in platform.machine():
     # import RPI GPIO if running on RPI
     import RPi.GPIO as GPIO
-else :
+else:
     # import mock GPIO if not running on RPI
     from lib import gpio_mock as GPIO
 
@@ -40,36 +40,51 @@ def sleep(sleep_period):
     sleep = sleep.total_seconds()
     time.sleep(sleep)
 
+
 def setup_nhl():
     """Function to setup the nhl_goal_light.py with team, team_id and API_URL"""
-    #change IP to API server (could be another goal light running on network to have 2 goal lights)
-    API_URL = input("Enter Flask API IP or URL. (If empty, default will be localhost) \n")
-    if API_URL == "" :
-        API_URL = "http://localhost:8080/api/v1/"
-    else :
-        API_URL = "http://" + API_URL + ":8080/api/v1/"
-	
-	  # Choose and return team_id to setup code
-    team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
-    if team == "":
-        team = "Canadiens"
+
+    if os.path.exists('./settings.txt'):
+        # get settings from file
+        f = open('settings.txt', 'r')
+        lines = f.readlines()
+        team_id = lines[1].strip('\n')
+        API_URL = lines[2].strip('\n')
+        delay = lines[3].strip('\n')
+
     else:
-        team = team.title()
-    print("team : {}".format(team))
-	
-	  # query the api to get the ID
-    response = requests.get("{}team/{}/id".format(API_URL, team))
-    team_id = response.json()['id']
-    print("team id : {}".format(team_id))
+        # input settings
+        # change IP to API server (could be another goal light running on
+        # network to have 2 goal lights)
+        API_URL = input(
+            "Enter Flask API IP or URL. (If empty, default will be localhost) \n")
+        if API_URL == "":
+            API_URL = "http://localhost:8080/api/v1/"
+        else:
+            API_URL = "http://" + API_URL + ":8080/api/v1/"
 
-    delay = input("Enter delay required to sync : \n")
-    if delay is "":
-        delay = 0
-    delay = float(delay)
-    print("delay : {}".format(delay))
+        # Choose and return team_id to setup code
+        team = input(
+            "Enter team you want to setup (without city) (Default: Canadiens) \n")
+        if team == "":
+            team = "Canadiens"
+        else:
+            team = team.title()
+        print("team : {}".format(team))
 
-    return (team_id,API_URL,delay)
-	  
+        # query the api to get the ID
+        response = requests.get("{}team/{}/id".format(API_URL, team))
+        team_id = response.json()['id']
+        print("team id : {}".format(team_id))
+
+        delay = input("Enter delay required to sync : \n")
+        if delay is "":
+            delay = 0
+        delay = float(delay)
+        print("delay : {}".format(delay))
+
+    return (team_id, API_URL, delay)
+
 
 if __name__ == "__main__":
 
@@ -81,13 +96,13 @@ if __name__ == "__main__":
     team_id, API_URL, delay = setup_nhl()
 
     try:
-        
+
         while (True):
 
-            #If the button is pressed, activate light and sound
-            #Comment out this section if no input button or not on RPI
-            if "armv" in platform.machine() and (GPIO.input(15) == 0 ):
-                print ("Button Pressed!")
+            # If the button is pressed, activate light and sound
+            # Comment out this section if no input button or not on RPI
+            if "armv" in platform.machine() and (GPIO.input(15) == 0):
+                print("Button Pressed!")
                 requests.get("{}goal_light/activate".format(API_URL))
 
             # check if in season
@@ -102,14 +117,16 @@ if __name__ == "__main__":
 
             print("gameday : {}".format(gameday))
 
-            # sleep to avoid errors in requests (might not be enough... added try to avoid errors)
+            # sleep to avoid errors in requests (might not be enough... added
+            # try to avoid errors)
             time.sleep(1)
 
             if season:
                 if gameday:
 
                     # Check score online and save score
-                    response = requests.get("{}team/{}/score".format(API_URL, team_id))
+                    response = requests.get(
+                        "{}team/{}/score".format(API_URL, team_id))
                     new_score = response.json()['score']
 
                     # If new game, replace old score with 0
