@@ -19,6 +19,10 @@ def setup():
     # Tell the program you want to use pin number 7 as output
     GPIO.setup(7, GPIO.OUT)
     GPIO.output(7, True)
+    # Set GPIO 15 as a PULL DOWN switch
+    #GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # If no input button connected, comment this line out
+    #    GPIO.add_event_detect(15,RISING,callback=goal_light_activate,bouncetime=5000) #Missing how to call ACTIVATE LIGHT function
+    #    GPIO.remove_event_detect(15) #Add to end of function
 
 
 def activate_goal_light():
