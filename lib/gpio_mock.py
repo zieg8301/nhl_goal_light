@@ -16,8 +16,8 @@ def setwarnings(mode):
     print("Set warnings as {0}".format(mode))
 
 
-def setup(pin, mode):
-    print("Set pin {0} as {1}".format(pin, mode))
+def setup(pin, mode,pull=""):
+    print("Set pin {0} as {1} {3}".format(pin, mode, pull))
 
 
 def output(pin, value):
