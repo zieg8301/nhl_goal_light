@@ -17,7 +17,7 @@ else:
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 # Tell the program you want to use pin number 15 as the input
-GPIO.setup(15, GPIO.IN)  # If no input button connected, comment this line out
+GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # If no input button connected, comment this line out
 
 
 def sleep(sleep_period):
@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
             # If the button is pressed, activate light and sound
             # Comment out this section if no input button or not on RPI
-            if "armv" in platform.machine() and (GPIO.input(15) == 0):
+            if "armv" in platform.machine() and (GPIO.input(15) == GPIO.LOW):
                 print("Button Pressed!")
                 requests.get("{}goal_light/activate".format(API_URL))
 
