@@ -6,7 +6,6 @@ import os
 import requests
 import platform
 
-<<<<<<< HEAD
 if "armv" in platform.machine():
     # import RPI GPIO if running on RPI
     import RPi.GPIO as GPIO
@@ -20,8 +19,6 @@ GPIO.setwarnings(False)
 # Tell the program you want to use pin number 15 as the input
 GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # If no input button connected, comment this line out
 
-=======
->>>>>>> a6739ab2896836db58e44782576083f9404ddd9e
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game.
@@ -120,15 +117,12 @@ if __name__ == "__main__":
 
         while (True):
 
-<<<<<<< HEAD
             # If the button is pressed, activate light and sound
             # Comment out this section if no input button or not on RPI
             if "armv" in platform.machine() and (GPIO.input(15) == GPIO.HIGH):
                 print("Button Pressed!")
                 requests.get("{}goal_light/activate".format(API_URL))
 
-=======
->>>>>>> a6739ab2896836db58e44782576083f9404ddd9e
             # check if in season
             response = requests.get("{}season".format(API_URL))
             season = response.json()['season']
