@@ -119,7 +119,7 @@ if __name__ == "__main__":
 
             # If the button is pressed, activate light and sound
             # Comment out this section if no input button or not on RPI
-            if "armv" in platform.machine() and (GPIO.input(15) == GPIO.LOW):
+            if "armv" in platform.machine() and (GPIO.input(15) == GPIO.HIGH):
                 print("Button Pressed!")
                 requests.get("{}goal_light/activate".format(API_URL))
 
