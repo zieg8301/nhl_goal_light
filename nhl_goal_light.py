@@ -6,19 +6,6 @@ import os
 import requests
 import platform
 
-if "armv" in platform.machine():
-    # import RPI GPIO if running on RPI
-    import RPi.GPIO as GPIO
-else:
-    # import mock GPIO if not running on RPI
-    from lib import gpio_mock as GPIO
-
-# Setup GPIO on raspberry pi
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
-# Tell the program you want to use pin number 15 as the input
-GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # If no input button connected, comment this line out
-
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game.
