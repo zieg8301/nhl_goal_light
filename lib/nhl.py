@@ -103,7 +103,7 @@ def check_game_end(team_id):
         if game_status == 7:
             return True
         else:
-            return True
+            return False
     except requests.exceptions.RequestException:    # This is the correct syntax
         # Return True to allow for another pass for test
         print("Error encountered, returning True for check_game_end")
