@@ -16,35 +16,27 @@ def setup():
     # Setup GPIO on raspberry pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
-    # Tell the program you want to use pin number 7 as output
-    GPIO.setup(7, GPIO.OUT)
-    GPIO.output(7, True)
-    # Set GPIO 15 as a PULL DOWN switch
-    #GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # If no input button connected, comment this line out
-    #    GPIO.add_event_detect(15,RISING,callback=goal_light_activate,bouncetime=5000) #Missing how to call ACTIVATE LIGHT function
-    #    GPIO.remove_event_detect(15) #Add to end of function
+    GPIO.setup(7, GPIO.OUT, initial=GPIO.HIGH) # Tell the program you want to use pin number 7 as output. Relay is ACTIVE LOW, so OFF is HIGH
+    GPIO.setup(15, GPIO.IN, GPIO.PUD_DOWN)  # Set GPIO 15 as a PULL DOWN switch
+    GPIO.add_event_detect(15, GPIO.RISING, activate_goal_light, 5000)
 
 
-def activate_goal_light():
-    """ Function to activate GPIO for goal light and Audio clip. """
+def activate_goal_light(gpio_event_var=0):
+    """ Function to activate GPIO for goal light and plar random audio clip. """
 
-    # select random audio clip
-    # Set random numbers depending on number of audio clips available
-    songrandom = random.randint(1, 3)
-    # Set pin 7 output at high for goal light ON
-    GPIO.output(7, False)
+    songrandom = random.randint(1, 3) #Set random numbers depending on number of audio clips available
+    GPIO.output(7, GPIO.LOW) #Turn on light, active low relay, so on is low
     # Prepare commande to play sound (change file name if needed)
     command_play_song = 'sudo mpg123 -q ./audio/goal_horn_{SongId}.mp3'.format(
         SongId=str(songrandom))
-    # Play sound
-    os.system(command_play_song)
-    # Set pin 7 output at high for goal light OFF
-    GPIO.output(7, True)
+    os.system(command_play_song) # Play sound
+    GPIO.output(7, GPIO.HIGH) #Turn off light
 
 
 def cleanup():
     """ Function to cleanup raspberry pi GPIO at end of code """
 
     # Restore GPIO to default state
+    GPIO.remove_event_detect(15) #Add to end of function
     GPIO.cleanup()
     print("GPIO cleaned!")
