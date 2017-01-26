@@ -73,9 +73,9 @@ def setup_nhl():
             team = "Canadiens"
         else:
             team = team.title()
-    # query the api to get the ID
-    response = requests.get("{}team/{}/id".format(API_URL, team))
-    team_id = response.json()['id']
+        # query the api to get the ID
+        response = requests.get("{}team/{}/id".format(API_URL, team))
+        team_id = response.json()['id']
 
     # find delay
     try:
