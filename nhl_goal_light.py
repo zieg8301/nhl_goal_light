@@ -26,7 +26,6 @@ def sleep(sleep_period):
     next_day = next_day.replace(hour=12, minute=10)
     sleep = next_day - now
     sleep = sleep.total_seconds()
-    print (sleep)
     time.sleep(sleep)
 
 
@@ -112,13 +111,14 @@ if __name__ == "__main__":
             # check game
             response = requests.get("{}team/{}/game".format(API_URL, team_id))
             gameday = response.json()['game']
-            
+
             print("gameday : {}".format(gameday))
-            
+
             # check end of game
-            response = requests.get("{}team/{}/end_game".format(API_URL, team_id))
+            response = requests.get(
+                "{}team/{}/end_game".format(API_URL, team_id))
             game_end = response.json()['end_game']
-            
+
             print("game_end : {}".format(game_end))
 
             time.sleep(1)
@@ -144,17 +144,18 @@ if __name__ == "__main__":
                             print("GOAL!")
                             old_score = new_score
                             # activate_goal_light()
-                            requests.get("{}goal_light/activate".format(API_URL))
-                        
+                            requests.get(
+                                "{}goal_light/activate".format(API_URL))
+
                     else:
                         print("Game Over!")
-                        sleep("day") #sleep till tomorrow
+                        sleep("day")  # sleep till tomorrow
                 else:
                     print("No Game Today!")
-                    sleep("day") #sleep till tomorrow
+                    sleep("day")  # sleep till tomorrow
             else:
                 print("OFF SEASON!")
-                sleep("season") #sleep till next season
+                sleep("season")  # sleep till next season
 
     except KeyboardInterrupt:
         print("\nCtrl-C pressed")
