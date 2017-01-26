@@ -15,7 +15,7 @@ def sleep(sleep_period):
     now = datetime.datetime.now()
     # Set sleep time for no game today
     if "day" in sleep_period:
-        delta = datetime.timedelta(days=1)
+        delta = datetime.timedelta(hours=12)
     # Set sleep time for not in season
     elif "season" in sleep_period:
         # If in August, 31 days else 30
