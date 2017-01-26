@@ -4,7 +4,6 @@ import datetime
 import time
 import os
 import requests
-import platform
 
 
 def sleep(sleep_period):
@@ -27,6 +26,7 @@ def sleep(sleep_period):
     next_day = next_day.replace(hour=12, minute=10)
     sleep = next_day - now
     sleep = sleep.total_seconds()
+    print (sleep)
     time.sleep(sleep)
 
 
@@ -102,12 +102,6 @@ if __name__ == "__main__":
     try:
 
         while (True):
-
-            # If the button is pressed, activate light and sound
-            # Comment out this section if no input button or not on RPI
-            if "armv" in platform.machine() and (GPIO.input(15) == GPIO.HIGH):
-                print("Button Pressed!")
-                requests.get("{}goal_light/activate".format(API_URL))
 
             # check if in season
             response = requests.get("{}season".format(API_URL))

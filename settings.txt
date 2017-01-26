@@ -1,4 +1,4 @@
 Enter API URL, team_id, delay, each on a separate line in this order. LEAVE EMPTY if you want to manually input every time.
 http://localhost:8080/api/v1/
-23
+8
 0
