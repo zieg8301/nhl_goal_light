@@ -41,7 +41,8 @@ def fetch_score(team_id):
     now = datetime.datetime.now()
 
     # Set URL depending on team selected
-    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    #url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    url = '{}schedule?teamId={}&date=2016-01-26'.format(NHL_API_URL, team_id)
     # Avoid request errors (might still not catch errors)
     try:
         # TODO proper JSON parsing
@@ -72,7 +73,8 @@ def check_if_game(team_id):
 
     
     # Set URL depending on team selected
-    url = '{}schedule?teamId={}'.format(NHL_API_URL, team_id) #Only shows games after noon, so will sleep till 12:10 pm
+    #url = '{}schedule?teamId={}'.format(NHL_API_URL, team_id) #Only shows games after noon, so will sleep till 12:10 pm
+    url = '{}schedule?teamId={}&date=2016-01-26'.format(NHL_API_URL, team_id)
     # Need test to make sure error is avoided
     try:
         gameday_url = requests.get(url)
@@ -93,7 +95,8 @@ def check_game_end(team_id):
     now = datetime.datetime.now()
 
     # Set URL depending on team selected
-    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    #url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    url = '{}schedule?teamId={}&date=2016-01-26'.format(NHL_API_URL, team_id)
     # Avoid request errors (might still not catch errors)
     try:
         # TODO proper JSON parsing
@@ -101,7 +104,7 @@ def check_game_end(team_id):
         game_status = game_status.text[game_status.text.find('statusCode\" : ') + 15:game_status.text.find('statusCode\" : ') + 16]
         game_status = int(game_status)
         if game_status == 7:
-            return True
+            return False
         else:
             return False
     except requests.exceptions.RequestException:    # This is the correct syntax
