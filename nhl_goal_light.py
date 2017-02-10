@@ -106,20 +106,17 @@ if __name__ == "__main__":
             response = requests.get("{}season".format(API_URL))
             season = response.json()['season']
 
-            print("season : {}".format(season))
 
             # check game
             response = requests.get("{}team/{}/game".format(API_URL, team_id))
             gameday = response.json()['game']
 
-            print("gameday : {}".format(gameday))
-
+            
             # check end of game
             response = requests.get(
                 "{}team/{}/end_game".format(API_URL, team_id))
             game_end = response.json()['end_game']
 
-            print("game_end : {}".format(game_end))
 
             time.sleep(1)
 
@@ -133,8 +130,7 @@ if __name__ == "__main__":
 
                         # If score change...
                         if new_score > old_score:
-                            """!!!!!!!!ADD DELAY HERE!!!!!!!"""
-                            print("OOOOOHHHHHHH...")
+                            
                             time.sleep(delay)
                             # save new score
                             print("GOAL!")
