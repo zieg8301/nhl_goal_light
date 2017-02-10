@@ -131,10 +131,6 @@ if __name__ == "__main__":
                             "{}team/{}/score".format(API_URL, team_id))
                         new_score = response.json()['score']
 
-                        # If new game, replace old score with 0
-                        if old_score > new_score:
-                            old_score = 0
-
                         # If score change...
                         if new_score > old_score:
                             """!!!!!!!!ADD DELAY HERE!!!!!!!"""
@@ -149,6 +145,7 @@ if __name__ == "__main__":
 
                     else:
                         print("Game Over!")
+                        old_score = 0
                         sleep("day")  # sleep till tomorrow
                 else:
                     print("No Game Today!")
