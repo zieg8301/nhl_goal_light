@@ -131,10 +131,6 @@ if __name__ == "__main__":
                             "{}team/{}/score".format(API_URL, team_id))
                         new_score = response.json()['score']
 
-<<<<<<< HEAD
-                        
-=======
->>>>>>> 30994eb6f773aec645c2b0df1a6f6c7770ed8653
                         # If score change...
                         if new_score > old_score:
                             """!!!!!!!!ADD DELAY HERE!!!!!!!"""
