@@ -129,15 +129,16 @@ if __name__ == "__main__":
                         new_score = response.json()['score']
 
                         # If score change...
-                        if new_score > old_score:
-                            
-                            time.sleep(delay)
-                            # save new score
-                            print("GOAL!")
+                        if new_score != old_score:
+                            time.sleep(delay) 
+                            if new_score > old_score:
+                                # save new score
+                                print("GOAL!")
+                                # activate_goal_light()
+                                requests.get(
+                                    "{}goal_light/activate".format(API_URL))
                             old_score = new_score
-                            # activate_goal_light()
-                            requests.get(
-                                "{}goal_light/activate".format(API_URL))
+                            
 
                     else:
                         print("Game Over!")
