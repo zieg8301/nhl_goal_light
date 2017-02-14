@@ -113,10 +113,8 @@ if __name__ == "__main__":
 
             
             # check end of game
-            response = requests.get(
-                "{}team/{}/end_game".format(API_URL, team_id))
+            response = requests.get("{}team/{}/end_game".format(API_URL, team_id))
             game_end = response.json()['end_game']
-
 
             time.sleep(1)
 
@@ -124,8 +122,7 @@ if __name__ == "__main__":
                 if gameday:
                     if not game_end:
                         # Check score online and save score
-                        response = requests.get(
-                            "{}team/{}/score".format(API_URL, team_id))
+                        response = requests.get("{}team/{}/score".format(API_URL, team_id))
                         new_score = response.json()['score']
 
                         # If score change...
@@ -135,14 +132,13 @@ if __name__ == "__main__":
                                 # save new score
                                 print("GOAL!")
                                 # activate_goal_light()
-                                requests.get(
-                                    "{}goal_light/activate".format(API_URL))
+                                requests.get("{}goal_light/activate".format(API_URL))
                             old_score = new_score
                             
 
                     else:
                         print("Game Over!")
-                        old_score = 0
+                        old_score = 0 # Reset for new game
                         sleep("day")  # sleep till tomorrow
                 else:
                     print("No Game Today!")
