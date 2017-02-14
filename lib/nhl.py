@@ -79,7 +79,7 @@ def check_if_game(team_id):
             return True
         else:
             return False
-    except requests.exceptions.RequestException:    # This is the correct syntax
+    except requests.exceptions.RequestException:
         # Return True to allow for another pass for test
         print("Error encountered, returning True for check_game")
         return True
@@ -97,13 +97,13 @@ def check_game_end(team_id):
     try:
         # TODO proper JSON parsing
         game_status = requests.get(url)
-        game_status = game_status.text[game_status.text.find('statusCode\" : ') + 15:game_status.text.find('statusCode\" : ') + 16]
+        game_status = game_status.text[game_status.text.find('statusCode') + 15:game_status.text.find('statusCode') + 16]
         game_status = int(game_status)
         if game_status == 7:
             return True
         else:
             return False
-    except requests.exceptions.RequestException:    # This is the correct syntax
-        # Return True to allow for another pass for test
-        print("Error encountered, returning True for check_game_end")
+    except requests.exceptions.RequestException:
+        # Return False to allow for another pass for test
+        print("Error encountered, returning False for check_game_end")
         return False
