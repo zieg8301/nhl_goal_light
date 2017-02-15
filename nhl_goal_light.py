@@ -73,7 +73,7 @@ def setup_nhl():
         else:
             team = team.title()
         # query the api to get the ID
-        response = requests.get("{}team/{}/id".format(API_URL, team))
+        response = requests.get("{0}team/{1}/id".format(API_URL, team))
         team_id = response.json()['id']
 
     # find delay
@@ -103,17 +103,17 @@ if __name__ == "__main__":
         while (True):
 
             # check if in season
-            response = requests.get("{}season".format(API_URL))
+            response = requests.get("{0}season".format(API_URL))
             season = response.json()['season']
 
 
             # check game
-            response = requests.get("{}team/{}/game".format(API_URL, team_id))
+            response = requests.get("{0}team/{1}/game".format(API_URL, team_id))
             gameday = response.json()['game']
 
             
             # check end of game
-            response = requests.get("{}team/{}/end_game".format(API_URL, team_id))
+            response = requests.get("{0}team/{1}/end_game".format(API_URL, team_id))
             game_end = response.json()['end_game']
 
             time.sleep(1)
@@ -122,7 +122,7 @@ if __name__ == "__main__":
                 if gameday:
                     if not game_end:
                         # Check score online and save score
-                        response = requests.get("{}team/{}/score".format(API_URL, team_id))
+                        response = requests.get("{0}team/{1}/score".format(API_URL, team_id))
                         new_score = response.json()['score']
 
                         # If score change...
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                                 # save new score
                                 print("GOAL!")
                                 # activate_goal_light()
-                                requests.get("{}goal_light/activate".format(API_URL))
+                                requests.get("{0}goal_light/activate".format(API_URL))
                             old_score = new_score
                             
 
