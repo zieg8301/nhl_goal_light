@@ -41,7 +41,7 @@ def fetch_score(team_id):
     now = datetime.datetime.now()
 
     # Set URL depending on team selected
-    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    url = '{}schedule?teamId={}'.format(NHL_API_URL, team_id)
     # Avoid request errors (might still not catch errors)
     try:
         # TODO proper JSON parsing
@@ -50,7 +50,7 @@ def fetch_score(team_id):
         score = int(score)
 
         # Print score for test
-        print(score, now.hour, now.minute, now.second)
+        print("Score: {} Time: {}:{}:{}".format(score, now.hour, now.minute, now.second))
         return score
     except requests.exceptions.RequestException:
         print("Error encountered, returning 0 for score")
@@ -88,11 +88,8 @@ def check_if_game(team_id):
 def check_game_end(team_id):
     """ Function to check if the game ofchosen team is over. Returns True if game, False if NO game. """
 
-    # Get current time
-    now = datetime.datetime.now()
-
     # Set URL depending on team selected
-    url = '{}schedule?teamId={}&date={:%Y-%m-%d}'.format(NHL_API_URL, team_id,now)
+    url = '{}schedule?teamId={}'.format(NHL_API_URL, team_id)
     # Avoid request errors
     try:
         # TODO proper JSON parsing
