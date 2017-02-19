@@ -102,25 +102,26 @@ if __name__ == "__main__":
 
         while (True):
 
+            time.sleep(1)
+            
             # check if in season
             response = requests.get("{0}season".format(API_URL))
             season = response.json()['season']
 
-
-            # check game
-            response = requests.get("{0}team/{1}/game".format(API_URL, team_id))
-            gameday = response.json()['game']
-
-            
-            # check end of game
-            response = requests.get("{0}team/{1}/end_game".format(API_URL, team_id))
-            game_end = response.json()['end_game']
-
-            time.sleep(1)
-
             if season:
+
+                # check game
+                response = requests.get("{0}team/{1}/game".format(API_URL, team_id))
+                gameday = response.json()['game']
+
                 if gameday:
+                    
+                    # check end of game
+                    response = requests.get("{0}team/{1}/end_game".format(API_URL, team_id))
+                    game_end = response.json()['end_game']
+                    
                     if not game_end:
+            
                         # Check score online and save score
                         response = requests.get("{0}team/{1}/score".format(API_URL, team_id))
                         new_score = response.json()['score']
