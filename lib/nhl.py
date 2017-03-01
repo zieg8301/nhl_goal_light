@@ -46,8 +46,11 @@ def fetch_score(team_id):
     try:
         # TODO proper JSON parsing
         score = requests.get(url)
-        score = score.text[score.text.find('id\" : {0}'.format(team_id)) - 37:score.text.find('id\" : {0}'.format(team_id)) - 36]
-        score = int(score)
+        score = score.json()
+        if team_id == score['dates'][0]['games'][0]['teams']['home']['team']['id']
+            score = score['dates'][0]['games'][0]['teams']['home']['score']
+        else
+            score = score['dates'][0]['games'][0]['teams']['away']['score']
 
         # Print score for test
         print("Score: {0} Time: {1}:{2}:{3}".format(score, now.hour, now.minute, now.second))
@@ -94,8 +97,8 @@ def check_game_end(team_id):
     try:
         # TODO proper JSON parsing
         game_status = requests.get(url)
-        game_status = game_status.text[game_status.text.find('statusCode') + 15:game_status.text.find('statusCode') + 16]
-        game_status = int(game_status)
+        game_status = game_status.json()
+        game_status = int(game_status['dates'][0]['games'][0]['status']['statusCode'])
         if game_status == 7:
             return True
         else:
