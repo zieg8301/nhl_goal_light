@@ -10,6 +10,8 @@ PUD_DOWN = "PULL_DOWN"
 PUD_UP = "PULL_UP"
 RISING = "RISING"
 FALLING = "FALLING"
+LOW = "LOW"
+HIGH = "HIGH"
 
 def setmode(mode):
     print("Set mode {0}".format(mode))
@@ -19,8 +21,8 @@ def setwarnings(mode):
     print("Set warnings as {0}".format(mode))
 
 
-def setup(pin, mode, pull=" "):
-    print("Set pin {0} as {1} {2}".format(pin, mode, pull))
+def setup(pin, mode, *args):
+    print("Set pin {0} as {1} {2}".format(pin, mode, args))
 
 
 def output(pin, value):
