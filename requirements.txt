@@ -1,7 +1,5 @@
 requests
-requests-cache
 RPI.GPIO
 pep8
 autopep8
-flask
 ipython

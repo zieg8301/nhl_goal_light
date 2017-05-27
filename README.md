@@ -23,13 +23,11 @@ run:
     $ sudo git clone https://github.com/arim215/nhl_goal_light.git 
   	$ sudo pip3 install -r requirements.txt
         
-**Always pass through code to read comments and see necessary inputs for your setup!!**
 
-You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime. You can run the flask API ($ sudo python3 flask_api.py) to find your team_id (Ex: FLASK_API_IP/api/v1/team/Canadiens/id will return "id : 8").
+You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime.
 
 To start application, use following commands:
 	
-    $ sudo python3 flask_api.py &
     $ sudo python3 nhl_goal_light.py
 
 ***
@@ -53,10 +51,3 @@ If you wish to change the audio clips to sounds with your teams goal horn and mu
 
 I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.  
 
-***
-## TODO
-* Test response time after a goal is scored
-* Add option to select team thru webpage
-* Make code pause between periods
-* Allow the addition of a I2C display
-* Add a text message service to notify goals and more

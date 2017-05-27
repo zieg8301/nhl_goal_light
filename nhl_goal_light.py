@@ -4,6 +4,8 @@ import datetime
 import time
 import os
 import requests
+from lib import nhl
+from lib import light
 
 
 def sleep(sleep_period):
@@ -31,38 +33,26 @@ def sleep(sleep_period):
 
 def setup_nhl():
     """Function to setup the nhl_goal_light.py with team,
-    team_id and API_URL"""
+    team_id and delay"""
 
-    lines = ""
-    """
-    Try to find a settings.txt file in the folder to automaticly setup
-    the goal light with pre-desired team, delay and API_URL.
-    settings.txt file should as such : Enter API URL, team_id, delay,
+    """Try to find a settings.txt file in the folder to automaticly setup
+    the goal light with pre-desired team and delay.
+    settings.txt file should as such : Enter team_id and delay,
     each on a separate line in this order. LEAVE EMPTY if you want to
     manually input every time. If program can't find settings.txt file or if
     file is empty, it will ask for user input.
     """
+    
+    lines = ""
+    
     if os.path.exists('./settings.txt'):
         # get settings from file
         f = open('settings.txt', 'r')
         lines = f.readlines()
-
-    # find API_URL
-    try:
-        API_URL = lines[1].strip('\n')
-    except IndexError:
-        API_URL = ""
-    if API_URL == "":
-        API_URL = input(
-            "Enter Flask API IP or URL. (If empty, default will be localhost) \n")
-        if API_URL == "":
-            API_URL = "http://localhost:8080/api/v1/"
-        else:
-            API_URL = "http://" + API_URL + ":8080/api/v1/"
-
+    
     # find team_id
     try:
-        team_id = lines[2].strip('\n')
+        team_id = lines[1].strip('\n')
     except IndexError:
         team_id = ""
     if team_id == "":
@@ -73,12 +63,11 @@ def setup_nhl():
         else:
             team = team.title()
         # query the api to get the ID
-        response = requests.get("{0}team/{1}/id".format(API_URL, team))
-        team_id = response.json()['id']
+        team_id = nhl.get_team_id(team)
 
     # find delay
     try:
-        delay = lines[3].strip('\n')
+        delay = lines[2].strip('\n')
     except IndexError:
         delay = ""
     if delay is "":
@@ -86,7 +75,8 @@ def setup_nhl():
         if delay is "":
             delay = 0
     delay = float(delay)
-    return (team_id, API_URL, delay)
+    
+    return (team_id, delay)
 
 
 if __name__ == "__main__":
@@ -96,7 +86,9 @@ if __name__ == "__main__":
     gameday = False
     season = False
 
-    team_id, API_URL, delay = setup_nhl()
+    light.setup()
+
+    team_id, delay = setup_nhl()
 
     try:
 
@@ -105,26 +97,21 @@ if __name__ == "__main__":
             time.sleep(1)
             
             # check if in season
-            response = requests.get("{0}season".format(API_URL))
-            season = response.json()['season']
-
+            season = nhl.check_season()
             if season:
 
                 # check game
-                response = requests.get("{0}team/{1}/game".format(API_URL, team_id))
-                gameday = response.json()['game']
+                gameday = nhl.check_if_game(team_id)
 
                 if gameday:
                     
                     # check end of game
-                    response = requests.get("{0}team/{1}/end_game".format(API_URL, team_id))
-                    game_end = response.json()['end_game']
+                    game_end = nhl.check_game_end(team_id)
                     
                     if not game_end:
             
                         # Check score online and save score
-                        response = requests.get("{0}team/{1}/score".format(API_URL, team_id))
-                        new_score = response.json()['score']
+                        new_score = nhl.fetch_score(team_id)
 
                         # If score change...
                         if new_score != old_score:
@@ -133,7 +120,7 @@ if __name__ == "__main__":
                                 # save new score
                                 print("GOAL!")
                                 # activate_goal_light()
-                                requests.get("{0}goal_light/activate".format(API_URL))
+                                light.activate_goal_light()
                             old_score = new_score
                             
 
