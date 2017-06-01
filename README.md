@@ -1,7 +1,6 @@
 # NHL Goal Light
 
 [![GitHub release](https://img.shields.io/github/release/arim215/nhl_goal_light.svg)](https://github.com/arim215/nhl_goal_light/releases)
-[![GitHub commits](https://img.shields.io/github/commits-since/arim215/nhl_goal_light/v3.0.svg)](https://github.com/arim215/nhl_goal_light/commits/master)
 [![closed pull requests](https://img.shields.io/github/issues-pr-closed/arim215/nhl_goal_light.svg)](https://github.com/arim215/nhl_goal_light/pulls?q=is%3Apr+is%3Aclosed)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/arim215/nhl_goal_light.svg)](https://github.com/arim215/nhl_goal_light/blob/master/requirements.txt)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/c0f4d36de7234c45bb7689af5a35c7ec/badge.svg)](https://www.quantifiedcode.com/app/project/c0f4d36de7234c45bb7689af5a35c7ec)
@@ -19,9 +18,9 @@ Run the following commands manually to install requirements
 
 run:
 
-  	$ sudo apt-get install git mpg123 python3 python3-pip
+    $ sudo apt-get install git mpg123 python3 python3-pip
     $ sudo git clone https://github.com/arim215/nhl_goal_light.git 
-  	$ sudo pip3 install -r requirements.txt
+    $ sudo pip3 install -r requirements.txt
         
 
 You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime.
@@ -31,7 +30,8 @@ To start application, use following commands:
     $ sudo python3 nhl_goal_light.py
 
 ***
-###Materials
+
+##Materials
 
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
 
@@ -43,10 +43,13 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 * 3.5mm audio extension cable
 
 ***
-###Audio
+
+##Audio
+
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
 
 ***
+
 ##Delay
 
 I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.  
