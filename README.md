@@ -6,7 +6,7 @@
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/c0f4d36de7234c45bb7689af5a35c7ec/badge.svg)](https://www.quantifiedcode.com/app/project/c0f4d36de7234c45bb7689af5a35c7ec)
 [![license](https://img.shields.io/github/license/arim215/nhl_goal_light.svg)](https://github.com/arim215/nhl_goal_light/blob/master/LICENSE)
 
-##Overview
+## Overview
 
 Nhl goal light python3 for raspberry pi GPIO. Works with any team, just enter team **name without city** when prompted.
 
@@ -30,8 +30,7 @@ To start application, use following commands:
     $ sudo python3 nhl_goal_light.py
 
 ***
-
-##Materials
+### Materials
 
 For documentation on how to wire the GPIOs with the lights and the button, pleaser refer to the "docs" folder.
 
@@ -43,14 +42,11 @@ For documentation on how to wire the GPIOs with the lights and the button, pleas
 * 3.5mm audio extension cable
 
 ***
-
-##Audio
+### Audio
 
 If you wish to change the audio clips to sounds with your teams goal horn and music, just download them, rename them (goal_horn_#.mp3) and save them in the "audio" folder.
 
 ***
+### Delay
 
-##Delay
-
-I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.  
-
+I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.
