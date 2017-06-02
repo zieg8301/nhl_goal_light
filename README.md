@@ -12,15 +12,15 @@ Nhl goal light python3 for raspberry pi GPIO. Works with any team, just enter te
 
 Before use, make sure you have:
 
-Python3, python3-pip, mpg123, git
+Python, python-pip, mpg123, git
 
 Run the following commands manually to install requirements
 
 run:
 
-    $ sudo apt-get install git mpg123 python3 python3-pip
+    $ sudo apt-get install git mpg123 python python-pip
     $ sudo git clone https://github.com/arim215/nhl_goal_light.git 
-    $ sudo pip3 install -r requirements.txt
+    $ sudo pip install -r requirements.txt
         
 
 You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code, or the code will ask for your input everytime.
