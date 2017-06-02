@@ -27,7 +27,7 @@ You can prepare a "settings.txt" file to auto-config the nhl_goal_light.py code,
 
 To start application, use following commands:
 	
-    $ sudo python3 nhl_goal_light.py
+    $ sudo python nhl_goal_light.py
 
 ***
 ### Materials

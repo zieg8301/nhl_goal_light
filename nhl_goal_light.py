@@ -45,9 +45,9 @@ def setup_nhl():
     
     lines = ""
     
-    if os.path.exists('./settings.txt'):
+    if os.path.exists('/home/pi/nhl_goal_light/settings.txt'):
         # get settings from file
-        f = open('settings.txt', 'r')
+        f = open('/home/pi/nhl_goal_light/settings.txt', 'r')
         lines = f.readlines()
     
     # find team_id
