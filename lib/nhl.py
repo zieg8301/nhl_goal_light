@@ -63,7 +63,7 @@ def check_season():
     """ Function to check if in season. Returns True if in season, False in off season. """
     # Get current time
     now = datetime.datetime.now()
-    if now.month in (7, 8, 9):
+    if now.month in (7, 8):
         return False
     else:
         return True
