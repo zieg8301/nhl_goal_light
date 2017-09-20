@@ -44,7 +44,8 @@ def setup_nhl():
     """
     
     lines = ""
-    
+    team = ""
+    team_id = ""
     if os.path.exists('/home/pi/nhl_goal_light/settings.txt'):
         # get settings from file
         f = open('/home/pi/nhl_goal_light/settings.txt', 'r')
@@ -56,8 +57,7 @@ def setup_nhl():
     except IndexError:
         team_id = ""
     if team_id == "":
-        team = input(
-            "Enter team you want to setup (without city) (Default: Canadiens) \n")
+        team = input("Enter team you want to setup (without city) (Default: Canadiens) \n")
         if team == "":
             team = "Canadiens"
         else:
