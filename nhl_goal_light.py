@@ -7,6 +7,7 @@ import requests
 from lib import nhl
 from lib import light
 
+main_dir = os.getcwd()
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game.
@@ -82,8 +83,6 @@ def setup_nhl():
 
 if __name__ == "__main__":
 
-    main_dir = os.path.dirname(os.path.realpath(__file__))
-
     old_score = 0
     new_score = 0
     gameday = False
@@ -123,7 +122,7 @@ if __name__ == "__main__":
                                 # save new score
                                 print("GOAL!")
                                 # activate_goal_light()
-                                light.activate_goal_light(main_dir = main_dir)
+                                light.activate_goal_light(main_dir)
                             old_score = new_score
                             
 
