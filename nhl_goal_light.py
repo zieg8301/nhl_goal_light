@@ -83,7 +83,6 @@ def setup_nhl():
 
 if __name__ == "__main__":
 
-    print (dir)
     old_score = 0
     new_score = 0
     gameday = False
