@@ -7,7 +7,7 @@ import requests
 from lib import nhl
 from lib import light
 
-main_dir = os.getcwd()
+main_dir = os.path.dirname(os.path.realpath(__file__))
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game.
