@@ -83,6 +83,7 @@ def setup_nhl():
 
 if __name__ == "__main__":
 
+    print (dir)
     old_score = 0
     new_score = 0
     gameday = False
@@ -122,7 +123,7 @@ if __name__ == "__main__":
                                 # save new score
                                 print("GOAL!")
                                 # activate_goal_light()
-                                light.activate_goal_light(main_dir)
+                                light.activate_goal_light()
                             old_score = new_score
                             
 
