@@ -7,6 +7,7 @@ import requests
 from lib import nhl
 from lib import light
 
+main_dir = name(os.path.realpath(__file__))
 
 def sleep(sleep_period):
     """ Function to sleep if not in season or no game.
@@ -46,7 +47,7 @@ def setup_nhl():
     lines = ""
     team = ""
     team_id = ""
-    settings_file = '/home/pi/nhl_goal_light/settings.txt'
+    settings_file = '{0}/settings.txt'.format(main_dir)
     if os.path.exists(settings_file):
         # get settings from file
         f = open(settings_file, 'r')
