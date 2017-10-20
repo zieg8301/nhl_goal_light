@@ -12,14 +12,14 @@ else :
 
 
 def setup():
-    """ Function to setup raspberry pi GPIO mode and warnings. PIN 7 OUT and PIN 15 IN """
+    """ Function to setup raspberry pi GPIO mode and warnings. PIN 7 OUT and PIN 11 IN """
 
     # Setup GPIO on raspberry pi
     GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
     GPIO.setup(7, GPIO.OUT, initial=GPIO.LOW) # Tell the program you want to use pin number 7 as output. Relay is ACTIVE LOW, so OFF is HIGH
-    GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Set GPIO 15 as a PULL DOWN switch
-    GPIO.add_event_detect(15, GPIO.RISING, activate_goal_light, 5000)
+    GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Set GPIO 11 as a PULL DOWN switch
+    GPIO.add_event_detect(11, GPIO.RISING, activate_goal_light, 5000)
 
 
 def activate_goal_light(gpio_event_var=0):
