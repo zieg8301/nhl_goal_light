@@ -11,7 +11,7 @@ Nhl goal light python3 for raspberry pi GPIO. Works with any team, just enter te
 
 Before use, make sure you have:
 
-Python3, python3-pip, mpg123, git
+python3, python3-pip, git
 
 Run the following commands manually to install requirements
 

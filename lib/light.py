@@ -2,6 +2,7 @@
 import random
 import os
 import platform
+import pygame
 
 if "armv" in platform.machine() :
     # import GPIO if running on RPI
@@ -25,10 +26,13 @@ def setup():
 def activate_goal_light(gpio_event_var=0):
     """ Function to activate GPIO for goal light and plar random audio clip. """
     songrandom = random.randint(1, 3) #Set random numbers depending on number of audio clips available
-    GPIO.output(7, GPIO.HIGH) #Turn on light, active low relay, so on is low
     # Prepare commande to play sound (change file name if needed)
-    command_play_song = 'sudo mpg123 -q /home/pi/nhl_goal_light/audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom))
-    os.system(command_play_song) # Play sound
+    pygame.mixer.init()
+    pygame.mixer.music.load('/home/pi/nhl_goal_light/audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom)))
+    pygame.mixer.music.play()
+    GPIO.output(7, GPIO.HIGH) #Turn on light, active low relay, so on is low
+    while pygame.mixer.music.get_busy() == True:
+        continue
     GPIO.output(7, GPIO.LOW) #Turn off light
 
 

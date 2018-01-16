@@ -1,2 +1,3 @@
 requests
 RPI.GPIO
+pygame
