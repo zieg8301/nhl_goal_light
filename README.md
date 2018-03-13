@@ -53,3 +53,8 @@ If you wish to change the audio clips to sounds with your teams goal horn and mu
 ### Delay
 
 I've teste my code while watching Rogers Gamecenter Live and the stream seems to be a bit delayed, so I added a delay to my code to make the goal horn start later. You will be prompted to enter a delay that works with your stream.
+
+***
+### WeMo Support
+
+This fork currently has rudimentary WeMo Support. Requires Ouimeaux: http://ouimeaux.readthedocs.io/en/latest/. Once Ouimeaux is configured, alter lines 36 and 43 in lib/light.py to reflect the name of the desired WeMo device you would like to trigger. WeMo triggering works in parallel with GPIO triggering currently.
