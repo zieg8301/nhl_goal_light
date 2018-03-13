@@ -30,10 +30,18 @@ def activate_goal_light(gpio_event_var=0):
     pygame.mixer.init()
     pygame.mixer.music.load('/home/pi/nhl_goal_light/audio/goal_horn_{SongId}.mp3'.format(SongId=str(songrandom)))
     pygame.mixer.music.play()
+    print("Music Played!")
     GPIO.output(7, GPIO.HIGH) #Turn on light, active low relay, so on is low
+    print("GPIO Triggered!")
+    os.system("wemo switch wi on") #Turn on wemo switch
+    print("WeMo Switch Turned on!")
     while pygame.mixer.music.get_busy() == True:
         continue
+    print("Music Over")
     GPIO.output(7, GPIO.LOW) #Turn off light
+    print("GPIO Off")
+    os.system("wemo switch wi off") #Turn off wemo switch
+    print("Wemo Switch Turned off.")
 
 
 def cleanup():
